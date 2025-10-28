@@ -246,7 +246,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Flexible(
                       child: Text(
                         '${booking.dateTime.day} ${_getMonthName(booking.dateTime.month)} ${booking.dateTime.year}, ${_formatTime(booking.dateTime)}',
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -256,7 +259,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Flexible(
                       child: Text(
                         booking.location,
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
