@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:namami/core/routes/routes.dart';
 import 'verify_update.dart';
 
@@ -82,8 +83,18 @@ class _ChangePhoneNumberScreenState extends State<ChangePhoneNumberScreen> {
             TextField(
               controller: _newPhoneController,
               keyboardType: TextInputType.phone,
+              maxLength: 10,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(10),
+              ],
               decoration: InputDecoration(
                 hintText: 'Enter new phone number',
+                prefixText: '+91 ',
+                prefixStyle: const TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w500,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -92,6 +103,7 @@ class _ChangePhoneNumberScreenState extends State<ChangePhoneNumberScreen> {
                   borderSide: const BorderSide(color: Color(0xFFFF9800)),
                 ),
                 prefixIcon: const Icon(Icons.phone_android, color: Color(0xFFFF9800)),
+                counterText: '',
               ),
             ),
             const SizedBox(height: 32),

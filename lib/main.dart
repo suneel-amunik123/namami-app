@@ -35,11 +35,14 @@ class _MyAppState extends State<MyApp> {
         builder: (context, themeProvider, child) {
           return MaterialApp(
             title: 'NAMAMI',
+
             debugShowCheckedModeBanner: false,
+
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(
                 seedColor: const Color(0xFFFF9800),
               ),
+              useMaterial3: true,
               brightness: themeProvider.isDarkMode
                   ? Brightness.dark
                   : Brightness.light,

@@ -11,7 +11,10 @@ class OtpView extends StatefulWidget {
 }
 
 class _OtpViewState extends State<OtpView> {
-  final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(
+    6,
+    (_) => TextEditingController(),
+  );
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
 
   @override
@@ -57,10 +60,7 @@ class _OtpViewState extends State<OtpView> {
                   const SizedBox(height: 8),
                   const Text(
                     'Enter 6 - digit verification code sent to your\nmobile number.',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   const SizedBox(height: 32),
                   // OTP Input Fields
@@ -77,7 +77,7 @@ class _OtpViewState extends State<OtpView> {
                           keyboardType: TextInputType.number,
                           maxLength: 1,
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           decoration: InputDecoration(
@@ -88,17 +88,21 @@ class _OtpViewState extends State<OtpView> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: Color(0xFFFF9800)),
+                              borderSide: const BorderSide(
+                                color: Color(0xFFFF9800),
+                              ),
                             ),
                           ),
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                           onChanged: (value) {
                             if (value.isNotEmpty && index < 5) {
                               _focusNodes[index + 1].requestFocus();
                             } else if (value.isEmpty && index > 0) {
                               _focusNodes[index - 1].requestFocus();
                             }
-                            
+
                             String otp = _controllers.map((c) => c.text).join();
                             otpProvider.updateOtp(otp);
                           },
@@ -116,14 +120,16 @@ class _OtpViewState extends State<OtpView> {
                         style: TextStyle(color: Colors.grey),
                       ),
                       GestureDetector(
-                        onTap: otpProvider.otpModel.canResend ? otpProvider.resendOtp : null,
+                        onTap: otpProvider.otpModel.canResend
+                            ? otpProvider.resendOtp
+                            : null,
                         child: Text(
                           otpProvider.otpModel.canResend
                               ? 'Resend code'
                               : 'Resend code in ${otpProvider.otpModel.resendTimer} seconds',
                           style: TextStyle(
-                            color: otpProvider.otpModel.canResend 
-                                ? const Color(0xFFFF9800) 
+                            color: otpProvider.otpModel.canResend
+                                ? const Color(0xFFFF9800)
                                 : Colors.grey,
                             fontWeight: FontWeight.w500,
                           ),
@@ -136,7 +142,9 @@ class _OtpViewState extends State<OtpView> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: otpProvider.otpModel.otp.length == 6 && !otpProvider.otpModel.isLoading
+                      onPressed:
+                          otpProvider.otpModel.otp.length == 6 &&
+                              !otpProvider.otpModel.isLoading
                           ? () => otpProvider.verifyOtp(context)
                           : null,
                       style: ElevatedButton.styleFrom(

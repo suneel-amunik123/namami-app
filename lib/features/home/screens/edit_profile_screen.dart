@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'mobile_otp_screen.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -173,7 +174,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Expanded(
               child: TextFormField(
                 controller: _mobileController,
+                keyboardType: TextInputType.phone,
+                maxLength: 10,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(10),
+                ],
                 decoration: InputDecoration(
+                  prefixText: '+91 ',
+                  prefixStyle: const TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w500,
+                  ),
                   filled: true,
                   fillColor: Colors.grey.shade100,
                   border: OutlineInputBorder(
@@ -184,6 +196,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     horizontal: 16,
                     vertical: 12,
                   ),
+                  counterText: '',
                 ),
               ),
             ),

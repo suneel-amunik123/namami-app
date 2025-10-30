@@ -93,16 +93,13 @@ class _BookingScreenState extends State<BookingScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: Colors.orange),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
             child: Icon(
               icon == Icons.check_circle ? Icons.check : Icons.close,
               color: Colors.white,
@@ -122,10 +119,7 @@ class _BookingScreenState extends State<BookingScreen> {
               ),
               Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
@@ -136,7 +130,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
   Widget _buildBookingCard(BookingModel booking) {
     if (booking == null) return const SizedBox();
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -223,9 +217,16 @@ class _BookingScreenState extends State<BookingScreen> {
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
-                  child: const Text(
-                    'Accept',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.check, size: 16),
+                      SizedBox(height: 2),
+                      Text(
+                        'Accept',
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -253,9 +254,16 @@ class _BookingScreenState extends State<BookingScreen> {
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
-                  child: const Text(
-                    'Reject',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.close, size: 16),
+                      SizedBox(height: 2),
+                      Text(
+                        'Reject',
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -274,7 +282,12 @@ class _BookingScreenState extends State<BookingScreen> {
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
+            style: TextStyle(
+              fontSize: 12,
+              color: icon == Icons.currency_rupee
+                  ? const Color(0xFFFF9800)
+                  : Colors.grey,
+            ),
           ),
         ),
       ],

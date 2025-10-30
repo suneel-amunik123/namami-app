@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 class VerifyUpdateScreen extends StatefulWidget {
@@ -16,9 +17,20 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
   );
 
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
+  
+  int _resendTimer = 60;
+  Timer? _timer;
+  bool _canResend = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
 
   @override
   void dispose() {
+    _timer?.cancel();
     for (var controller in _otpControllers) {
       controller.dispose();
     }
@@ -26,6 +38,28 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
       node.dispose();
     }
     super.dispose();
+  }
+
+  void _startTimer() {
+    _canResend = false;
+    _resendTimer = 60;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_resendTimer > 0) {
+          _resendTimer--;
+        } else {
+          _canResend = true;
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+  void _resendCode() {
+    if (_canResend) {
+      _startTimer();
+      // Add actual resend OTP logic here
+    }
   }
 
   void _onOtpChanged(String value, int index) {
@@ -115,9 +149,21 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 24),
-            Text(
-              'Enter verification code sent to ${widget.newPhoneNumber}',
-              style: const TextStyle(fontSize: 16, color: Colors.black87),
+            const Text(
+              'Enter OTP',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Enter 6 - digit verification code sent to your mobile number.',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+              ),
             ),
             const SizedBox(height: 32),
             Wrap(
@@ -149,6 +195,30 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Not Received? ',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black87,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: _resendCode,
+                  child: Text(
+                    _canResend ? 'Resend code' : 'Resend code in $_resendTimer seconds',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: _canResend ? const Color(0xFFFF9800) : Colors.grey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
@@ -158,12 +228,16 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFF9800),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(25),
                   ),
                 ),
                 child: const Text(
                   'Verify & Update',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

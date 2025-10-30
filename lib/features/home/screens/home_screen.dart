@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
+                            color: Colors.orange,
                           ),
                         ),
                         Consumer<HomeProvider>(
@@ -46,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               homeProvider.user.name.split(' ').first,
                               style: const TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey,
+                                color: Colors.orange,
                               ),
                             );
                           },
@@ -71,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         return _buildEarningsCard(
                           'Total Earnings',
                           '₹${homeProvider.user.totalEarnings.toStringAsFixed(0)}',
-                          Colors.orange.shade50,
+                          Colors.white,
                         );
                       },
                     ),
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         return _buildEarningsCard(
                           'This Month',
                           '₹${homeProvider.user.monthlyEarnings.toStringAsFixed(0)}',
-                          Colors.orange.shade50,
+                          Colors.white,
                         );
                       },
                     ),
@@ -158,7 +159,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(width: 12),
                   const Text(
                     'Daily Bookings',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.orange,
+                    ),
                   ),
                 ],
               ),
@@ -191,6 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.orange.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,14 +219,14 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
         color: Colors.grey.shade50,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: Colors.orange),
       ),
       child: Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 20,
             backgroundColor: Color(0xFFFF9800),
-            child: Icon(Icons.person, color: Colors.white, size: 20),
+            child: Image.asset('assets/images/ganesh.jpg', fit: BoxFit.fill),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -240,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Icon(
                       Icons.calendar_today,
                       size: 12,
-                      color: Colors.grey,
+                      color: Colors.orange,
                     ),
                     const SizedBox(width: 4),
                     Flexible(
@@ -296,90 +302,105 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildNewBookingCard(booking, HomeProvider homeProvider) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          booking.pujaName,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(height: 4),
-        Row(
-          children: [
-            const Icon(Icons.calendar_today, size: 12, color: Colors.grey),
-            const SizedBox(width: 4),
-            Flexible(
-              child: Text(
-                '${booking.dateTime.day} ${_getMonthName(booking.dateTime.month)} ${booking.dateTime.year}, ${_formatTime(booking.dateTime)}',
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-                overflow: TextOverflow.ellipsis,
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.orange),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            booking.pujaName,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              const Icon(Icons.calendar_today, size: 12, color: Colors.orange),
+              const SizedBox(width: 4),
+              Flexible(
+                child: Text(
+                  '${booking.dateTime.day} ${_getMonthName(booking.dateTime.month)} ${booking.dateTime.year}, ${_formatTime(booking.dateTime)}',
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-            const SizedBox(width: 8),
-            const Icon(Icons.location_on, size: 12, color: Colors.grey),
-            const SizedBox(width: 4),
-            Flexible(
-              child: Text(
-                booking.location,
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-                overflow: TextOverflow.ellipsis,
+              const SizedBox(width: 8),
+              const Icon(Icons.location_on, size: 12, color: Colors.orange),
+              const SizedBox(width: 4),
+              Flexible(
+                child: Text(
+                  booking.location,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {
-                  homeProvider.acceptBooking(booking.id);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: homeProvider.isBookingAccepted(booking.id)
-                      ? const Color(0xFFFF9800)
-                      : Colors.white,
-                  foregroundColor: homeProvider.isBookingAccepted(booking.id)
-                      ? Colors.white
-                      : const Color(0xFFFF9800),
-                  side: const BorderSide(color: Color(0xFFFF9800)),
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    homeProvider.acceptBooking(booking.id);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: homeProvider.isBookingAccepted(booking.id)
+                        ? const Color(0xFFFF9800)
+                        : Colors.white,
+                    foregroundColor: homeProvider.isBookingAccepted(booking.id)
+                        ? Colors.white
+                        : const Color(0xFFFF9800),
+                    side: const BorderSide(color: Color(0xFFFF9800)),
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Accept',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                child: const Text(
-                  'Accept',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                ),
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {
-                  homeProvider.rejectBooking(booking.id);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.red,
-                  side: const BorderSide(color: Colors.red),
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    homeProvider.rejectBooking(booking.id);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.red,
+                    side: const BorderSide(color: Colors.red),
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                  child: const Text(
+                    'Reject',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                   ),
                 ),
-                child: const Text(
-                  'Reject',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 

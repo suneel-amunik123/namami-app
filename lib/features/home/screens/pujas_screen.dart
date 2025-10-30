@@ -49,18 +49,32 @@ class _PujasScreenState extends State<PujasScreen> {
           children: [
             // Search Bar
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.grey.shade300),
               ),
-              child: const TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search Puja',
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search, color: Colors.grey),
-                  suffixIcon: Icon(Icons.mic, color: Color(0xFFFF9800)),
-                ),
+              child: const Row(
+                children: [
+                  Icon(Icons.search, color: Color(0xFFFF9800), size: 20),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Search Puja',
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                    ),
+                  ),
+                  // Icon(
+                  //   Icons.vertical_align_bottom_sharp,
+                  //   color: Color(0xFFFF9800),
+                  //   size: 20,
+                  // ),
+                  // SizedBox(width: 12),
+                  // Icon(Icons.more_vert, color: Colors.grey, size: 16),
+                  SizedBox(width: 8),
+                  Icon(Icons.mic, color: Color(0xFFFF9800), size: 20),
+                ],
               ),
             ),
             const SizedBox(height: 20),
@@ -79,30 +93,31 @@ class _PujasScreenState extends State<PujasScreen> {
             // Add Puja Button
             Container(
               width: double.infinity,
-              margin: const EdgeInsets.only(top: 16),
+              margin: const EdgeInsets.only(top: 16, left: 230),
               child: ElevatedButton(
                 onPressed: _showAddPujaBottomSheet,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey.shade100,
+                  backgroundColor: Colors.orange,
                   foregroundColor: Colors.black,
                   elevation: 0,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                  shape: CircleBorder(
+                    side: BorderSide(color: Colors.grey.shade300),
+                    // borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.add, color: Color(0xFFFF9800)),
-                    SizedBox(width: 8),
-                    Text(
-                      'Add Puja',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    Icon(Icons.add, color: Color(0xFFFFFFFF), size: 30),
+                    // SizedBox(width: 8),
+                    // Text(
+                    //   '',
+                    //   style: TextStyle(
+                    //     fontSize: 16,
+                    //     fontWeight: FontWeight.w500,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -123,7 +138,7 @@ class _PujasScreenState extends State<PujasScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: Colors.orange),
       ),
       child: Row(
         children: [
@@ -132,6 +147,9 @@ class _PujasScreenState extends State<PujasScreen> {
             decoration: BoxDecoration(
               color: const Color(0xFFFF9800).withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
+              // border: Border.all(
+              //   color: const Color(0xFFFF9800).withOpacity(0.3),
+              // ),
             ),
             child: const Icon(
               Icons.temple_hindu,
@@ -155,10 +173,7 @@ class _PujasScreenState extends State<PujasScreen> {
                   children: [
                     Text(
                       price,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                     const SizedBox(width: 8),
                     GestureDetector(
@@ -166,7 +181,7 @@ class _PujasScreenState extends State<PujasScreen> {
                       child: const Icon(
                         Icons.edit,
                         size: 16,
-                        color: Colors.grey,
+                        color: Colors.orange,
                       ),
                     ),
                   ],
@@ -217,10 +232,7 @@ class _PujasScreenState extends State<PujasScreen> {
               children: [
                 const Text(
                   'Add Puja',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
@@ -231,10 +243,7 @@ class _PujasScreenState extends State<PujasScreen> {
             const SizedBox(height: 20),
             const Text(
               'Puja Name',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
             TextField(
@@ -254,10 +263,7 @@ class _PujasScreenState extends State<PujasScreen> {
             const SizedBox(height: 16),
             const Text(
               'New Price',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
             TextField(
@@ -280,10 +286,12 @@ class _PujasScreenState extends State<PujasScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (nameController.text.isNotEmpty && priceController.text.isNotEmpty) {
+                  if (nameController.text.isNotEmpty &&
+                      priceController.text.isNotEmpty) {
                     setState(() {
                       _pujaStates[nameController.text] = false;
-                      _pujaPrices[nameController.text] = '₹${priceController.text}';
+                      _pujaPrices[nameController.text] =
+                          '₹${priceController.text}';
                     });
                     Navigator.pop(context);
                   }
@@ -312,17 +320,18 @@ class _PujasScreenState extends State<PujasScreen> {
   }
 
   void _showEditPujaDialog(String pujaName) {
-    final TextEditingController nameController = TextEditingController(text: pujaName);
+    final TextEditingController nameController = TextEditingController(
+      text: pujaName,
+    );
     final TextEditingController priceController = TextEditingController(
       text: (_pujaPrices[pujaName] ?? '₹1500').replaceAll('₹', ''),
     );
 
     showDialog(
       context: context,
+      // barrierColor: Colors.black26,
       builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -334,10 +343,7 @@ class _PujasScreenState extends State<PujasScreen> {
                 children: [
                   const Text(
                     'Edit Puja Price',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
@@ -350,10 +356,7 @@ class _PujasScreenState extends State<PujasScreen> {
               const SizedBox(height: 20),
               const Text(
                 'Puja Name',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 8),
               TextField(
@@ -372,10 +375,7 @@ class _PujasScreenState extends State<PujasScreen> {
               const SizedBox(height: 16),
               const Text(
                 'New Price',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 8),
               TextField(
@@ -398,7 +398,8 @@ class _PujasScreenState extends State<PujasScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (nameController.text.isNotEmpty && priceController.text.isNotEmpty) {
+                    if (nameController.text.isNotEmpty &&
+                        priceController.text.isNotEmpty) {
                       setState(() {
                         // Remove old entry if name changed
                         if (nameController.text != pujaName) {
@@ -406,8 +407,10 @@ class _PujasScreenState extends State<PujasScreen> {
                           _pujaPrices.remove(pujaName);
                         }
                         // Add/update with new values
-                        _pujaStates[nameController.text] = _pujaStates[pujaName] ?? false;
-                        _pujaPrices[nameController.text] = '₹${priceController.text}';
+                        _pujaStates[nameController.text] =
+                            _pujaStates[pujaName] ?? false;
+                        _pujaPrices[nameController.text] =
+                            '₹${priceController.text}';
                       });
                       Navigator.pop(context);
                     }

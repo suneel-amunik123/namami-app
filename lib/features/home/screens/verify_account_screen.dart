@@ -156,7 +156,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Colors.green,
+                  color: Colors.black87,
                 ),
               ),
               const SizedBox(height: 24),
