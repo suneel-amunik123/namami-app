@@ -56,10 +56,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTextField('Name *', _nameController),
+
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0xFFFF9800), width: 1),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextField('Name *', _nameController),
             const SizedBox(height: 16),
             _buildMobileField(),
             const SizedBox(height: 16),
@@ -108,7 +116,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -182,19 +191,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             SizedBox(
               height: 48,
               child: ElevatedButton(
-                onPressed: _isVerified
-                    ? null
-                    : () async {
-                        final result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MobileOtpScreen(),
-                          ),
-                        );
-                        if (result == true) {
-                          setState(() => _isVerified = true);
-                        }
-                      },
+                onPressed: () async {
+                  if (_isVerified) return;
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MobileOtpScreen(),
+                    ),
+                  );
+                  if (result == true) {
+                    setState(() => _isVerified = true);
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _isVerified
                       ? Colors.green
@@ -206,7 +214,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: Text(
                   _isVerified ? 'Verified' : 'Send OTP',
                   style: const TextStyle(
-                    color: Colors.green,
+                    color: Colors.white,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),

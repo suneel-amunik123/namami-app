@@ -46,10 +46,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const CircleAvatar(
                       radius: 40,
                       backgroundColor: Color(0xFFFF9800),
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 40,
+                      // child: Icon(Icons.person, color: Colors.white, size: 40),
+                      backgroundImage: AssetImage(
+                        'assets/images/profile_image.jpg',
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -63,19 +62,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Panditji',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        ),
+                        // const Text(
+                        //   'Panditji',
+                        //   style: TextStyle(
+                        //     fontSize: 14,
+                        //     color: Colors.grey,
+                        //   ),
+                        // ),
                         const SizedBox(width: 8),
                         Text(
                           _isVerified == true ? 'Verified' : 'Pending',
                           style: TextStyle(
                             fontSize: 12,
-                            color: _isVerified == true ? Colors.green : Colors.orange,
+                            color: _isVerified == true
+                                ? Colors.green
+                                : Colors.orange,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -87,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 24),
 
-            const SizedBox(height: 32),
+            // const SizedBox(height: 32),
 
             // Profile Options Container
             Container(
@@ -99,18 +100,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: Column(
                 children: [
-                  _buildProfileOption(
-                    Icons.edit_outlined,
-                    'Edit Profile',
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EditProfileScreen(),
-                        ),
-                      );
-                    },
-                  ),
+                  _buildProfileOption(Icons.edit_outlined, 'Edit Profile', () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EditProfileScreen(),
+                      ),
+                    );
+                  }),
                   _buildDivider(),
                   _buildProfileOption(
                     Icons.phone_outlined,
@@ -126,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   _buildDivider(),
                   _buildProfileOption(
-                    Icons.verified_user_outlined,
+                    Icons.verified_outlined,
                     'Verify Account',
                     () async {
                       final result = await Navigator.push(
@@ -169,24 +166,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                   _buildDivider(),
-                  _buildProfileOption(
-                    Icons.help_outline,
-                    'Help & Support',
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HelpSupportScreen(),
-                        ),
-                      );
-                    },
-                  ),
+                  _buildProfileOption(Icons.help_outline, 'Help & Support', () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HelpSupportScreen(),
+                      ),
+                    );
+                  }),
                   _buildDivider(),
-                  _buildProfileOption(
-                    Icons.logout,
-                    'Logout',
-                    () {},
-                  ),
+                  _buildProfileOption(Icons.logout, 'Logout', () {}),
                 ],
               ),
             ),
@@ -209,11 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: const Color(0xFFFF9800).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(
-                icon,
-                color: const Color(0xFFFF9800),
-                size: 20,
-              ),
+              child: Icon(icon, color: const Color(0xFFFF9800), size: 20),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -225,11 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            const Icon(
-              Icons.chevron_right,
-              color: Colors.grey,
-              size: 20,
-            ),
+            const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
           ],
         ),
       ),

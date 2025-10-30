@@ -15,10 +15,7 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
     (index) => TextEditingController(),
   );
 
-  final List<FocusNode> _focusNodes = List.generate(
-    6,
-    (index) => FocusNode(),
-  );
+  final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
 
   @override
   void dispose() {
@@ -32,8 +29,16 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
   }
 
   void _onOtpChanged(String value, int index) {
-    if (value.length == 1 && index < 5) {
-      _focusNodes[index + 1].requestFocus();
+    if (value.isEmpty) {
+      if (index > 0) {
+        _focusNodes[index - 1].requestFocus();
+      }
+    } else {
+      if (index < _focusNodes.length - 1) {
+        _focusNodes[index + 1].requestFocus();
+      } else {
+        _focusNodes[index].unfocus();
+      }
     }
   }
 
@@ -74,6 +79,7 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
               ),
             ],
           ),
+
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -114,12 +120,14 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
               style: const TextStyle(fontSize: 16, color: Colors.black87),
             ),
             const SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8,
+              runSpacing: 8,
               children: List.generate(
                 6,
                 (index) => SizedBox(
-                  width: 50,  // Slightly smaller width to fit 6 digits
+                  width: 48,
                   child: TextField(
                     controller: _otpControllers[index],
                     focusNode: _focusNodes[index],

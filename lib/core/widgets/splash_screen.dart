@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateToLogin() {
     if (_hasNavigated) return;
-    
+
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted && !_hasNavigated) {
         _hasNavigated = true;
@@ -47,12 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
           backgroundColor: themeProvider.isDarkMode
               ? Colors.black
               : Colors.white,
-          body: Center(
-            child: Image.asset(
-              'assets/images/splashscreen.png',
-              fit: BoxFit.contain,
-            ),
-          ),
+          body: Image.asset('assets/images/splashscreen.png', fit: BoxFit.fill),
         );
       },
     );

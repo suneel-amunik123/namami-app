@@ -9,10 +9,10 @@ class LoginProvider extends ChangeNotifier {
   LoginModel get loginModel => _loginModel;
 
   final List<String> _animationImages = [
-    'assets/images/splashscreen.png',
-    'assets/images/splashscreen.png',
-    'assets/images/splashscreen.png',
-    'assets/images/splashscreen.png',
+    'assets/images/frame1.jpg',
+    'assets/images/frame2.jpg',
+    'assets/images/frame3.jpg',
+    'assets/images/frame4.jpg',
   ];
 
   LoginProvider() {
@@ -49,7 +49,7 @@ class LoginProvider extends ChangeNotifier {
 
     _loginModel = _loginModel.copyWith(isLoading: false);
     notifyListeners();
-    
+
     // Navigate to OTP screen
     Navigator.pushNamed(context, '/otp');
   }

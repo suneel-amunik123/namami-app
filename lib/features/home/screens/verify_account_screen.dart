@@ -13,10 +13,10 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   final _nameController = TextEditingController();
   final _dobController = TextEditingController();
   final _mobileController = TextEditingController(text: '9876543210');
-  
+
   File? _selectedImage;
   final ImagePicker _picker = ImagePicker();
-  
+
   DateTime? _selectedDate;
 
   Future<void> _selectDate() async {
@@ -28,19 +28,18 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Color(0xFFFF9800),
-            ),
+            colorScheme: const ColorScheme.light(primary: Color(0xFFFF9800)),
           ),
           child: child!,
         );
       },
     );
-    
+
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _dobController.text = '${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}';
+        _dobController.text =
+            '${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}';
       });
     }
   }
@@ -59,10 +58,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
             children: [
               const Text(
                 'Select Image Source',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 20),
               ListTile(
@@ -74,7 +70,10 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.photo_library, color: Color(0xFFFF9800)),
+                leading: const Icon(
+                  Icons.photo_library,
+                  color: Color(0xFFFF9800),
+                ),
                 title: const Text('Gallery'),
                 onTap: () {
                   Navigator.pop(context);
@@ -103,13 +102,15 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
         final File imageFile = File(image.path);
         final int fileSizeInBytes = await imageFile.length();
         final double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
-        
+
         if (fileSizeInMB <= 5) {
           setState(() {
             _selectedImage = imageFile;
           });
         } else {
-          _showErrorDialog('File size exceeds 5 MB limit. Please select a smaller file.');
+          _showErrorDialog(
+            'File size exceeds 5 MB limit. Please select a smaller file.',
+          );
         }
       }
     } catch (e) {
@@ -127,7 +128,10 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('OK', style: TextStyle(color: Color(0xFFFF9800))),
+              child: const Text(
+                'OK',
+                style: TextStyle(color: Color(0xFFFF9800)),
+              ),
             ),
           ],
         );
@@ -188,9 +192,9 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
 
   bool _isFormValid() {
     return _nameController.text.isNotEmpty &&
-           _dobController.text.isNotEmpty &&
-           _mobileController.text.isNotEmpty &&
-           _selectedImage != null;
+        _dobController.text.isNotEmpty &&
+        _mobileController.text.isNotEmpty &&
+        _selectedImage != null;
   }
 
   @override
@@ -224,7 +228,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.black87,
+                color: Color(0xFFFF9800),
               ),
             ),
             const SizedBox(height: 20),
@@ -239,16 +243,13 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.black87,
+                color: Color(0xFFFF9800),
               ),
             ),
             const SizedBox(height: 8),
             const Text(
               'Aadhar Card or PAN Card',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.black54),
             ),
             const SizedBox(height: 12),
             _buildUploadField(),
@@ -259,7 +260,9 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
               child: ElevatedButton(
                 onPressed: _isFormValid() ? _showSuccessDialog : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _isFormValid() ? const Color(0xFFFF9800) : Colors.grey,
+                  backgroundColor: _isFormValid()
+                      ? const Color(0xFFFF9800)
+                      : Colors.grey,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -280,7 +283,11 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, String hint) {
+  Widget _buildTextField(
+    String label,
+    TextEditingController controller,
+    String hint,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -307,7 +314,10 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Color(0xFFFF9800)),
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
           ),
         ),
       ],
@@ -344,8 +354,14 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                   borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(color: Color(0xFFFF9800)),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                suffixIcon: const Icon(Icons.calendar_today, color: Color(0xFFFF9800)),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                suffixIcon: const Icon(
+                  Icons.calendar_today,
+                  color: Color(0xFFFF9800),
+                ),
               ),
             ),
           ),
@@ -363,24 +379,20 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey.shade300, style: BorderStyle.solid),
+          border: Border.all(
+            color: Colors.grey.shade300,
+            style: BorderStyle.solid,
+          ),
         ),
         child: _selectedImage != null
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.file(
-                  _selectedImage!,
-                  fit: BoxFit.cover,
-                ),
+                child: Image.file(_selectedImage!, fit: BoxFit.cover),
               )
             : const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.upload_file,
-                    size: 40,
-                    color: Colors.grey,
-                  ),
+                  Icon(Icons.upload_file, size: 40, color: Colors.grey),
                   SizedBox(height: 8),
                   Text(
                     'Upload Photo',
@@ -393,10 +405,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                   SizedBox(height: 4),
                   Text(
                     'Max file size: 5 MB',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],
               ),
