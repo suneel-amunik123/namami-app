@@ -17,7 +17,7 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
   );
 
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
-  
+
   int _resendTimer = 60;
   Timer? _timer;
   bool _canResend = false;
@@ -102,7 +102,7 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
                     Navigator.of(context).pop();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF9800),
+                    backgroundColor: const Color(0xFFe47F25),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -130,13 +130,13 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFFFF9800)),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFFE47F25)),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
           'Verify Phone Number',
           style: TextStyle(
-            color: Color(0xFFFF9800),
+            color: Color(0xFFE47f25),
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -160,10 +160,7 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
             const SizedBox(height: 8),
             const Text(
               'Enter 6 - digit verification code sent to your mobile number.',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 32),
             Wrap(
@@ -201,18 +198,17 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
               children: [
                 const Text(
                   'Not Received? ',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
-                  ),
+                  style: TextStyle(fontSize: 14, color: Colors.black87),
                 ),
                 GestureDetector(
                   onTap: _resendCode,
                   child: Text(
-                    _canResend ? 'Resend code' : 'Resend code in $_resendTimer seconds',
+                    _canResend
+                        ? 'Resend code'
+                        : 'Resend code in $_resendTimer seconds',
                     style: TextStyle(
                       fontSize: 14,
-                      color: _canResend ? const Color(0xFFFF9800) : Colors.grey,
+                      color: _canResend ? const Color(0xFFE47F25) : Colors.grey,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -222,11 +218,11 @@ class _VerifyUpdateScreenState extends State<VerifyUpdateScreen> {
             const SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
-              height: 48,
+              height: 40,
               child: ElevatedButton(
                 onPressed: () => _showSuccessDialog(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFF9800),
+                  backgroundColor: const Color(0xFFE47F25),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),

@@ -36,7 +36,7 @@ class _PujasScreenState extends State<PujasScreen> {
         title: const Text(
           'My Puja Services',
           style: TextStyle(
-            color: Color(0xFFFF9800),
+            color: Color(0xFFE47F25),
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -55,16 +55,17 @@ class _PujasScreenState extends State<PujasScreen> {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.grey.shade300),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(Icons.search, color: Color(0xFFFF9800), size: 20),
+                  Icon(Icons.search, color: Color(0xFFE47F25), size: 20),
                   SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       'Search Puja',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(color: Color(0xFF000000), fontSize: 14),
                     ),
                   ),
+
                   // Icon(
                   //   Icons.vertical_align_bottom_sharp,
                   //   color: Color(0xFFFF9800),
@@ -72,8 +73,13 @@ class _PujasScreenState extends State<PujasScreen> {
                   // ),
                   // SizedBox(width: 12),
                   // Icon(Icons.more_vert, color: Colors.grey, size: 16),
+                  Container(
+                    width: 1,
+                    height: 40,
+                    color: Color(0xFFE47F25).withOpacity(0.5),
+                  ),
                   SizedBox(width: 8),
-                  Icon(Icons.mic, color: Color(0xFFFF9800), size: 20),
+                  Icon(Icons.mic, color: Color(0xFFE47F25), size: 20),
                 ],
               ),
             ),
@@ -97,7 +103,7 @@ class _PujasScreenState extends State<PujasScreen> {
               child: ElevatedButton(
                 onPressed: _showAddPujaBottomSheet,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: const Color(0xFFE47F25),
                   foregroundColor: Colors.black,
                   elevation: 0,
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -138,24 +144,25 @@ class _PujasScreenState extends State<PujasScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.orange),
+        border: Border.all(color: Color(0xFFE47F25)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFFFF9800).withOpacity(0.1),
+              color: const Color(0xFFE47F25).withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
               // border: Border.all(
               //   color: const Color(0xFFFF9800).withOpacity(0.3),
               // ),
             ),
-            child: const Icon(
-              Icons.temple_hindu,
-              color: Color(0xFFFF9800),
-              size: 20,
-            ),
+            // child: const Icon(
+            //   Icons.temple_hindu,
+            //   color: Color(0xFFE47F25),
+            //   size: 20,
+            // ),
+            child: Image.asset('assets/images/oom.jpg', width: 24, height: 24),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -173,7 +180,10 @@ class _PujasScreenState extends State<PujasScreen> {
                   children: [
                     Text(
                       price,
-                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF000000),
+                      ),
                     ),
                     const SizedBox(width: 8),
                     GestureDetector(
@@ -181,7 +191,7 @@ class _PujasScreenState extends State<PujasScreen> {
                       child: const Icon(
                         Icons.edit,
                         size: 16,
-                        color: Colors.orange,
+                        color: Color(0xFFE47F25),
                       ),
                     ),
                   ],
@@ -196,8 +206,9 @@ class _PujasScreenState extends State<PujasScreen> {
                 _pujaStates[pujaName] = value;
               });
             },
-            activeColor: const Color(0xFFFF9800),
-            inactiveThumbColor: Colors.grey,
+            activeColor: const Color(0xFFE47F25),
+
+            inactiveThumbColor: Colors.white,
             inactiveTrackColor: Colors.grey.shade300,
           ),
         ],
@@ -256,7 +267,7 @@ class _PujasScreenState extends State<PujasScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xFFFF9800)),
+                  borderSide: const BorderSide(color: Color(0xFFE47F25)),
                 ),
               ),
             ),
@@ -277,13 +288,13 @@ class _PujasScreenState extends State<PujasScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xFFFF9800)),
+                  borderSide: const BorderSide(color: Color(0xFFE47F25)),
                 ),
               ),
             ),
             const SizedBox(height: 24),
             SizedBox(
-              width: double.infinity,
+              width: 150,
               child: ElevatedButton(
                 onPressed: () {
                   if (nameController.text.isNotEmpty &&
@@ -297,7 +308,7 @@ class _PujasScreenState extends State<PujasScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFF9800),
+                  backgroundColor: const Color(0xFFE47F25),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -331,6 +342,7 @@ class _PujasScreenState extends State<PujasScreen> {
       context: context,
       // barrierColor: Colors.black26,
       builder: (context) => Dialog(
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -368,7 +380,7 @@ class _PujasScreenState extends State<PujasScreen> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Color(0xFFFF9800)),
+                    borderSide: const BorderSide(color: Color(0xFFE47F25)),
                   ),
                 ),
               ),
@@ -389,13 +401,13 @@ class _PujasScreenState extends State<PujasScreen> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Color(0xFFFF9800)),
+                    borderSide: const BorderSide(color: Color(0xFFE47F25)),
                   ),
                 ),
               ),
               const SizedBox(height: 24),
               SizedBox(
-                width: double.infinity,
+                width: 150,
                 child: ElevatedButton(
                   onPressed: () {
                     if (nameController.text.isNotEmpty &&
@@ -416,8 +428,8 @@ class _PujasScreenState extends State<PujasScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF9800),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: const Color(0xFFE47F25),
+                    padding: const EdgeInsets.symmetric(vertical: 0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../provider/otp_provider.dart';
 
-class OtpView extends StatefulWidget {
-  const OtpView({super.key});
+class OtpViewLogin extends StatefulWidget {
+  const OtpViewLogin({super.key});
 
   @override
-  State<OtpView> createState() => _OtpViewState();
+  State<OtpViewLogin> createState() => _OtpViewLoginState();
 }
 
-class _OtpViewState extends State<OtpView> {
+class _OtpViewLoginState extends State<OtpViewLogin> {
   final List<TextEditingController> _controllers = List.generate(
     6,
     (_) => TextEditingController(),
@@ -45,51 +45,58 @@ class _OtpViewState extends State<OtpView> {
         body: Consumer<OtpProvider>(
           builder: (context, otpProvider, child) {
             return Padding(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.06),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Enter OTP',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: MediaQuery.of(context).size.width * 0.06,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                  Text(
                     'Enter 6 - digit verification code sent to your\nmobile number.',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.035,
+                      color: Colors.grey,
+                    ),
                   ),
-                  const SizedBox(height: 32),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.08),
                   // OTP Input Fields
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: List.generate(6, (index) {
                       return SizedBox(
-                        width: 45,
-                        height: 50,
+                        width: MediaQuery.of(context).size.width * 0.12,
+                        height: MediaQuery.of(context).size.width * 0.145,
                         child: TextField(
                           controller: _controllers[index],
                           focusNode: _focusNodes[index],
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           maxLength: 1,
-                          style: const TextStyle(
-                            fontSize: 16,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.04,
                             fontWeight: FontWeight.bold,
                           ),
                           decoration: InputDecoration(
                             counterText: '',
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                MediaQuery.of(context).size.width * 0.02,
+                              ),
                               borderSide: BorderSide(color: Colors.grey[300]!),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(
+                                MediaQuery.of(context).size.width * 0.02,
+                              ),
                               borderSide: const BorderSide(
-                                color: Color(0xFFFF9800),
+                                color: Color(0xFFE47F25),
                               ),
                             ),
                           ),
@@ -110,14 +117,17 @@ class _OtpViewState extends State<OtpView> {
                       );
                     }),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.06),
                   // Resend Code
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'Not Received? ',
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                        ),
                       ),
                       GestureDetector(
                         onTap: otpProvider.otpModel.canResend
@@ -129,15 +139,16 @@ class _OtpViewState extends State<OtpView> {
                               : 'Resend code in ${otpProvider.otpModel.resendTimer} seconds',
                           style: TextStyle(
                             color: otpProvider.otpModel.canResend
-                                ? const Color(0xFFFF9800)
+                                ? const Color(0xFFE47F25)
                                 : Colors.grey,
                             fontWeight: FontWeight.w500,
+                            fontSize: MediaQuery.of(context).size.width * 0.035,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 32),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.08),
                   // Verify Button
                   SizedBox(
                     width: double.infinity,
@@ -148,18 +159,30 @@ class _OtpViewState extends State<OtpView> {
                           ? () => otpProvider.verifyOtp(context)
                           : null,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF9800),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: const Color(0xFFE47F25),
+                        padding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.width * 0.02,
+                        ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(
+                            MediaQuery.of(context).size.width * 0.05,
+                          ),
                         ),
                       ),
                       child: otpProvider.otpModel.isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : const Text(
+                          ? SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.04,
+                              width: MediaQuery.of(context).size.width * 0.04,
+                              child: const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : Text(
                               'Verify & Login',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),

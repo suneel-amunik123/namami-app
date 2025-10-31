@@ -7,6 +7,7 @@ import 'privacy_policy.dart';
 import 'change_phone_number.dart';
 import 'edit_profile_screen.dart';
 import 'verify_account_screen.dart';
+import '../../auth/view/login_view.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -24,18 +25,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Profile',
           style: TextStyle(
-            color: Color(0xFFFF9800),
-            fontSize: 18,
+            color: const Color(0xFFE47F25),
+            fontSize: MediaQuery.of(context).size.width * 0.045,
             fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
         child: Column(
           children: [
             // Profile Header
@@ -43,19 +44,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               builder: (context, homeProvider, child) {
                 return Column(
                   children: [
-                    const CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Color(0xFFFF9800),
+                    CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.1,
+                      backgroundColor: const Color(0xFFE47F25),
                       // child: Icon(Icons.person, color: Colors.white, size: 40),
-                      backgroundImage: AssetImage(
+                      backgroundImage: const AssetImage(
                         'assets/images/profile_image.jpg',
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.03),
                     Text(
                       homeProvider.user.name.split(' ').first,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.045,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -69,14 +70,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //     color: Colors.grey,
                         //   ),
                         // ),
-                        const SizedBox(width: 8),
+                        // const SizedBox(width: 8),
                         Text(
                           _isVerified == true ? 'Verified' : 'Pending',
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: MediaQuery.of(context).size.width * 0.03,
                             color: _isVerified == true
                                 ? Colors.green
-                                : Colors.orange,
+                                : Colors.black,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -86,28 +87,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               },
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.06),
 
             // const SizedBox(height: 32),
 
             // Profile Options Container
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFFF9800), width: 1),
+                borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.03),
+                border: Border.all(color: const Color(0xFFE47F25), width: 1),
               ),
               child: Column(
                 children: [
-                  _buildProfileOption(Icons.edit_outlined, 'Edit Profile', () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EditProfileScreen(),
-                      ),
-                    );
-                  }),
+                  _buildProfileOption(
+                    Icons.person_2_outlined,
+                    'Edit Profile',
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfileScreen(),
+                        ),
+                      );
+                    },
+                  ),
                   _buildDivider(),
                   _buildProfileOption(
                     Icons.phone_outlined,
@@ -154,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   _buildDivider(),
                   _buildProfileOption(
-                    Icons.description_outlined,
+                    Icons.person_2_outlined,
                     'Terms & Conditions',
                     () {
                       Navigator.push(
@@ -175,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     );
                   }),
                   _buildDivider(),
-                  _buildProfileOption(Icons.logout, 'Logout', () {}),
+                  _buildProfileOption(Icons.logout, 'Logout', _showLogoutDialog),
                 ],
               ),
             ),
@@ -189,28 +194,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.width * 0.03,
+        ),
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
               decoration: BoxDecoration(
-                color: const Color(0xFFFF9800).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
+                color: const Color(0xFFE47F25).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
               ),
-              child: Icon(icon, color: const Color(0xFFFF9800), size: 20),
+              child: Icon(
+                icon,
+                color: const Color(0xFFE47F25),
+                size: MediaQuery.of(context).size.width * 0.05,
+              ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.04),
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.04,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-            const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
+            Icon(
+              Icons.chevron_right,
+              color: Colors.grey,
+              size: MediaQuery.of(context).size.width * 0.05,
+            ),
           ],
         ),
       ),
@@ -221,7 +236,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       height: 1,
       color: Colors.grey.shade200,
-      margin: const EdgeInsets.symmetric(vertical: 4),
+      margin: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.width * 0.01,
+      ),
+    );
+  }
+
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout'),
+          content: const Text('Do you want to log out?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginView()),
+                  (route) => false,
+                );
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

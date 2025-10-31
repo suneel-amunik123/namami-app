@@ -20,18 +20,18 @@ class _BookingScreenState extends State<BookingScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Booking',
           style: TextStyle(
-            color: Color(0xFFFF9800),
-            fontSize: 18,
+            color: const Color(0xFFE47F25),
+            fontSize: MediaQuery.of(context).size.width * 0.045,
             fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
         child: Column(
           children: [
             // Status Cards
@@ -45,7 +45,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     Icons.check_circle,
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.04),
                 Expanded(
                   child: _buildStatusCard(
                     '08',
@@ -56,7 +56,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
 
             // Booking List
             Expanded(
@@ -89,11 +89,11 @@ class _BookingScreenState extends State<BookingScreen> {
     IconData icon,
   ) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.orange),
+        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
+        border: Border.all(color: const Color(0xFFe47f25), width: 1),
       ),
       child: Row(
         children: [
@@ -112,14 +112,17 @@ class _BookingScreenState extends State<BookingScreen> {
             children: [
               Text(
                 count,
-                style: const TextStyle(
-                  fontSize: 18,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 title,
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.03,
+                  color: const Color(0xFF000000),
+                ),
               ),
             ],
           ),
@@ -132,12 +135,12 @@ class _BookingScreenState extends State<BookingScreen> {
     if (booking == null) return const SizedBox();
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.04),
+      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFFF9800), width: 1),
+        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.03),
+        border: Border.all(color: const Color(0xFFE47f25), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,25 +148,35 @@ class _BookingScreenState extends State<BookingScreen> {
           // Profile Section
           Row(
             children: [
-              const CircleAvatar(
-                radius: 20,
-                backgroundColor: Colors.grey,
-                child: Icon(Icons.person, color: Colors.white, size: 20),
+              CircleAvatar(
+                radius: MediaQuery.of(context).size.width * 0.05,
+                backgroundColor: Colors.white,
+                child: Image.asset(
+                  'assets/images/booking_profile.jpg',
+                  width: MediaQuery.of(context).size.width * 0.12,
+                  height: MediaQuery.of(context).size.width * 0.12,
+                  fit: BoxFit.fill,
+                ),
+                // child: Icon(Icons.person, color: Colors.white, size: 20),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.03),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     booking.customerName ?? 'Unknown',
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.035,
                       fontWeight: FontWeight.w600,
+                      color: const Color(0xFF000000),
                     ),
                   ),
                   Text(
                     booking.customerPhone ?? '',
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.03,
+                      color: const Color(0xFF000000),
+                    ),
                   ),
                 ],
               ),
@@ -194,77 +207,86 @@ class _BookingScreenState extends State<BookingScreen> {
           // Action Buttons
           Row(
             children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (booking.id != null) {
-                      setState(() {
-                        _bookingStates[booking.id!] = 'accepted';
-                      });
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _bookingStates[booking.id] == 'accepted'
-                        ? const Color(0xFFFF9800)
-                        : Colors.white,
-                    foregroundColor: _bookingStates[booking.id] == 'accepted'
-                        ? Colors.white
-                        : const Color(0xFFFF9800),
-                    side: const BorderSide(color: Color(0xFFFF9800)),
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
-                    ),
+              ElevatedButton(
+                onPressed: () {
+                  if (booking.id != null) {
+                    setState(() {
+                      _bookingStates[booking.id!] = 'accepted';
+                    });
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _bookingStates[booking.id] == 'accepted'
+                      ? const Color(0xFFE47F25)
+                      : Colors.white,
+                  foregroundColor: _bookingStates[booking.id] == 'accepted'
+                      ? Colors.white
+                      : const Color(0xFFE47F25),
+                  side: const BorderSide(color: Color(0xFFE47F25)),
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 12,
                   ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.check, size: 16),
-                      SizedBox(height: 2),
-                      Text(
-                        'Accept',
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.check, size: 16),
+                    SizedBox(width: 2),
+                    Text(
+                      'Accept',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(width: 12),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (booking.id != null) {
-                      setState(() {
-                        _bookingStates[booking.id!] = 'rejected';
-                      });
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _bookingStates[booking.id] == 'rejected'
-                        ? Colors.red
-                        : Colors.white,
-                    foregroundColor: _bookingStates[booking.id] == 'rejected'
-                        ? Colors.white
-                        : Colors.red,
-                    side: const BorderSide(color: Colors.red),
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
-                    ),
+              ElevatedButton(
+                onPressed: () {
+                  if (booking.id != null) {
+                    setState(() {
+                      _bookingStates[booking.id!] = 'rejected';
+                    });
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _bookingStates[booking.id] == 'rejected'
+                      ? Colors.red
+                      : Colors.white,
+                  foregroundColor: _bookingStates[booking.id] == 'rejected'
+                      ? Colors.white
+                      : Colors.red,
+                  side: const BorderSide(color: Colors.red),
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 12,
                   ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.close, size: 16),
-                      SizedBox(height: 2),
-                      Text(
-                        'Reject',
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.close, size: 16),
+                    SizedBox(width: 2),
+                    Text(
+                      'Reject',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF000000),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -277,16 +299,20 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget _buildDetailRow(IconData icon, String text) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: Colors.grey),
-        const SizedBox(width: 8),
+        Icon(
+          icon,
+          size: MediaQuery.of(context).size.width * 0.04,
+          color: const Color.fromARGB(255, 73, 73, 73),
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.02),
         Expanded(
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: MediaQuery.of(context).size.width * 0.03,
               color: icon == Icons.currency_rupee
-                  ? const Color(0xFFFF9800)
-                  : Colors.grey,
+                  ? const Color(0xFFE47F25)
+                  : const Color(0xFF000000),
             ),
           ),
         ),

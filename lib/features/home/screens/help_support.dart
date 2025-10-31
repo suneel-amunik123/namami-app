@@ -31,7 +31,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
         title: const Text(
           'Help & Support',
           style: TextStyle(
-            color: Color(0xFFFF9800),
+            color: Color(0xFFE47F25),
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -46,21 +46,33 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
           children: [
             // Search Bar
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
               // margin: const EdgeInsets.only(bottom: 24),
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFFF9800)),
+                border: Border.all(color: const Color(0xFFE47F25)),
               ),
-              child: const TextField(
-                // textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  hintText: 'Search for Help',
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search, color: Colors.grey),
-                ),
+              child: Row(
+                children: [
+                  Icon(Icons.search, color: Color(0xFFE47F25), size: 20),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Search for Help',
+                      style: TextStyle(color: Color(0xFF000000), fontSize: 14),
+                    ),
+                  ),
+                ],
               ),
+              // child: const TextField(
+              //   // textAlign: TextAlign.center,
+              //   decoration: InputDecoration(
+              //     hintText: 'Search for Help',
+              //     border: InputBorder.none,
+              //     prefixIcon: Icon(Icons.search, color: Colors.grey),
+              //   ),
+              // ),
             ),
             const SizedBox(height: 24),
 
@@ -102,7 +114,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                 color: Colors.grey.shade50,
                 borderRadius: BorderRadius.circular(8),
                 // border: Border.all(color: Colors.grey.shade300),
-                border: Border.all(color: const Color(0xFFFF9800)),
+                border: Border.all(color: const Color(0xFFE47F25)),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
@@ -131,7 +143,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFFF9800)),
+                border: Border.all(color: const Color(0xFFE47F25)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +152,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     children: [
                       Icon(
                         Icons.share,
-                        color: const Color(0xFFFF9800),
+                        color: const Color(0xFFE47F25),
                         size: 20,
                       ),
                       const SizedBox(width: 8),
@@ -164,7 +176,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF9800),
+                        backgroundColor: const Color(0xFFE47F25),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -211,7 +223,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     children: [
                       Icon(
                         Icons.feedback_outlined,
-                        color: Colors.orange,
+                        color: Color(0xFFE47F25),
                         size: 20,
                       ),
                       const SizedBox(width: 8),
@@ -240,7 +252,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: const Color(0xFFFF9800)),
+                      border: Border.all(color: const Color(0xFFE47F25)),
                     ),
                     child: const TextField(
                       decoration: InputDecoration(
@@ -263,7 +275,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                       color: Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(6),
                       // border: Border.all(color: Colors.grey.shade300),
-                      border: Border.all(color: const Color(0xFFFF9800)),
+                      border: Border.all(color: const Color(0xFFE47F25)),
                     ),
                     child: TextField(
                       controller: _feedbackController,
@@ -289,12 +301,12 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Feedback sent successfully!'),
-                            backgroundColor: Color(0xFFFF9800),
+                            backgroundColor: Color(0xFFE47F25),
                           ),
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF9800),
+                        backgroundColor: const Color(0xFFE47F25),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -319,9 +331,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFFFF9800).withOpacity(0.1),
+                color: const Color(0xFFE47F25).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFFF9800)),
+                border: Border.all(color: const Color(0xFFE47F25)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -341,7 +353,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF9800),
+                        backgroundColor: const Color(0xFFE47F25),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -395,7 +407,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFFF9800),
+                color: const Color(0xFFE47F25),
                 shape: BoxShape.circle,
               ),
 
@@ -407,13 +419,13 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: Colors.orange,
+                color: Color(0xFFe47F25),
               ),
             ),
             const SizedBox(height: 4),
             Text(
               subtitle,
-              style: const TextStyle(fontSize: 12, color: Colors.orange),
+              style: const TextStyle(fontSize: 12, color: Color(0xFFE47F25)),
               textAlign: TextAlign.center,
             ),
           ],

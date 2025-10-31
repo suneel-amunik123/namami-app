@@ -12,6 +12,17 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  String selectedCountryCode = '+91';
+  String selectedFlagImage = 'assets/images/indian_flag.jpg';
+  bool isDropdownOpen = false;
+
+  final List<Map<String, String>> countries = [
+    {'code': '+91', 'flag': 'assets/images/indian_flag.jpg', 'name': 'India'},
+    {'code': '+1', 'flag': 'assets/images/usa_flag2.jpg', 'name': 'USA'},
+    {'code': '+44', 'flag': 'assets/images/uk_flag.png', 'name': 'UK'},
+    {'code': '+61', 'flag': 'assets/images/austraila.png', 'name': 'Australia'},
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
                       return Container(
                         width: double.infinity,
                         height: double.infinity,
-                        color: Colors.orange.shade200,
+                        color: Color(0xFFE47F25),
                         child: const Icon(
                           Icons.image_not_supported,
                           size: 100,
@@ -84,17 +95,17 @@ class _LoginViewState extends State<LoginView> {
                       duration: const Duration(milliseconds: 300),
                       margin: const EdgeInsets.symmetric(horizontal: 4),
                       width: isActive ? 12 : 8,
-                      height: 4,
+                      height: 8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
                         color: isActive
-                            ? const Color(0xFFFF9800)
+                            ? const Color(0xFFE47F25)
                             : Colors.white.withOpacity(0.6),
                         boxShadow: isActive
                             ? [
                                 BoxShadow(
                                   color: const Color(
-                                    0xFFFF9800,
+                                    0xFFE47F25,
                                   ).withOpacity(0.4),
                                   blurRadius: 8,
                                   spreadRadius: 1,
@@ -129,55 +140,106 @@ class _LoginViewState extends State<LoginView> {
                           child: const Text(
                             'Login',
                             style: TextStyle(
-                              fontSize: 28,
+                              fontSize: 25,
                               fontWeight: FontWeight.bold,
                               // color: Color(0xFF6A1B9A),
                               color: Color.fromARGB(255, 8, 8, 8),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 15),
                         const Text(
                           'Enter Phone Number',
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 8),
                         // Phone Input
                         Container(
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey[300]!),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
                             children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 16,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/indian_flag.jpg',
-                                      width: 24,
-                                      height: 16,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                            return Container(
-                                              width: 24,
-                                              height: 16,
-                                              color: Colors.orange,
-                                              child: const Icon(
-                                                Icons.flag,
-                                                size: 12,
-                                                color: Colors.white,
-                                              ),
-                                            );
-                                          },
-                                    ),
-                                    const SizedBox(width: 8),
-                                    const Text('+91'),
-                                  ],
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isDropdownOpen = !isDropdownOpen;
+                                  });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 14,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        selectedFlagImage,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                            0.08,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                            0.08,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                              return Container(
+                                                width:
+                                                    MediaQuery.of(
+                                                      context,
+                                                    ).size.width *
+                                                    0.06,
+                                                height:
+                                                    MediaQuery.of(
+                                                      context,
+                                                    ).size.width *
+                                                    0.04,
+                                                color: Color(0xFFE47F25),
+                                                child: Icon(
+                                                  Icons.flag,
+                                                  size:
+                                                      MediaQuery.of(
+                                                        context,
+                                                      ).size.width *
+                                                      0.03,
+                                                  color: Colors.white,
+                                                ),
+                                              );
+                                            },
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                            0.02,
+                                      ),
+                                      Text(
+                                        selectedCountryCode,
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                            0.01,
+                                      ),
+                                      Icon(
+                                        isDropdownOpen
+                                            ? Icons.keyboard_arrow_up
+                                            : Icons.keyboard_arrow_down,
+                                        size:
+                                            MediaQuery.of(context).size.width *
+                                            0.05,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(
@@ -202,7 +264,113 @@ class _LoginViewState extends State<LoginView> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        if (isDropdownOpen)
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey[300]!),
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: countries.map((country) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedCountryCode = country['code']!;
+                                      selectedFlagImage = country['flag']!;
+                                      isDropdownOpen = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
+                                      vertical:
+                                          MediaQuery.of(context).size.width *
+                                          0.03,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.grey[200]!,
+                                          width: 0.5,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          country['flag']!,
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.06,
+                                          height:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                                return Container(
+                                                  width:
+                                                      MediaQuery.of(
+                                                        context,
+                                                      ).size.width *
+                                                      0.06,
+                                                  height:
+                                                      MediaQuery.of(
+                                                        context,
+                                                      ).size.width *
+                                                      0.04,
+                                                  color: Colors.orange,
+                                                  child: Icon(
+                                                    Icons.flag,
+                                                    size:
+                                                        MediaQuery.of(
+                                                          context,
+                                                        ).size.width *
+                                                        0.03,
+                                                    color: Colors.white,
+                                                  ),
+                                                );
+                                              },
+                                        ),
+                                        SizedBox(
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.03,
+                                        ),
+                                        Text(
+                                          '${country['code']} ${country['name']}',
+                                          style: TextStyle(
+                                            fontSize:
+                                                MediaQuery.of(
+                                                  context,
+                                                ).size.width *
+                                                0.04,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        const SizedBox(height: 40),
                         // Send OTP Button
                         SizedBox(
                           width: double.infinity,
@@ -213,10 +381,10 @@ class _LoginViewState extends State<LoginView> {
                                     loginProvider.sendOTP(context);
                                   },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFFF9800),
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              backgroundColor: const Color(0xFFE47F25),
+                              padding: const EdgeInsets.symmetric(vertical: 0),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(20),
                               ),
                             ),
                             child: loginProvider.loginModel.isLoading
@@ -233,7 +401,7 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 55),
                         // Terms and Conditions
                         Center(
                           child: RichText(
@@ -250,7 +418,7 @@ class _LoginViewState extends State<LoginView> {
                                 TextSpan(
                                   text: 'Terms & Conditions',
                                   style: TextStyle(
-                                    color: Color(0xFFFF9800),
+                                    color: Color(0xFFE47F25),
                                     decoration: TextDecoration.underline,
                                   ),
                                 ),
@@ -258,7 +426,7 @@ class _LoginViewState extends State<LoginView> {
                                 TextSpan(
                                   text: 'Privacy Policy',
                                   style: TextStyle(
-                                    color: Color(0xFFFF9800),
+                                    color: Color(0xFFE47F25),
                                     decoration: TextDecoration.underline,
                                   ),
                                 ),

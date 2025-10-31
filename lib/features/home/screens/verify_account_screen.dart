@@ -18,6 +18,35 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   final ImagePicker _picker = ImagePicker();
 
   DateTime? _selectedDate;
+  
+  String? _nameError;
+  String? _mobileError;
+  String? _dobError;
+  String? _imageError;
+
+  void _validateName(String value) {
+    setState(() {
+      _nameError = value.length < 2 ? 'Please enter minimum 2 characters' : null;
+    });
+  }
+
+  void _validateMobile(String value) {
+    setState(() {
+      _mobileError = value.length != 10 ? 'Enter 10 digit mobile number' : null;
+    });
+  }
+
+  void _validateDob() {
+    setState(() {
+      _dobError = _selectedDate == null ? 'Please select date of birth' : null;
+    });
+  }
+
+  void _validateImage() {
+    setState(() {
+      _imageError = _selectedImage == null ? 'Please upload identity proof' : null;
+    });
+  }
 
   Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
@@ -28,7 +57,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(primary: Color(0xFFFF9800)),
+            colorScheme: const ColorScheme.light(primary: Color(0xFFE47F25)),
           ),
           child: child!,
         );
@@ -62,7 +91,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
               ),
               const SizedBox(height: 20),
               ListTile(
-                leading: const Icon(Icons.camera_alt, color: Color(0xFFFF9800)),
+                leading: const Icon(Icons.camera_alt, color: Color(0xFFE47F25)),
                 title: const Text('Camera'),
                 onTap: () {
                   Navigator.pop(context);
@@ -72,7 +101,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
               ListTile(
                 leading: const Icon(
                   Icons.photo_library,
-                  color: Color(0xFFFF9800),
+                  color: Color(0xFFE47F25),
                 ),
                 title: const Text('Gallery'),
                 onTap: () {
@@ -81,7 +110,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.folder, color: Color(0xFFFF9800)),
+                leading: const Icon(Icons.folder, color: Color(0xFFE47F25)),
                 title: const Text('File Manager'),
                 onTap: () {
                   Navigator.pop(context);
@@ -130,7 +159,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
               onPressed: () => Navigator.pop(context),
               child: const Text(
                 'OK',
-                style: TextStyle(color: Color(0xFFFF9800)),
+                style: TextStyle(color: Color(0xFFE47F25)),
               ),
             ),
           ],
@@ -168,7 +197,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                     Navigator.of(context).pop(true);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF9800),
+                    backgroundColor: const Color(0xFFe47F25),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -205,73 +234,95 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFFFF9800)),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFFE47f25)),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           'Verify Account',
           style: TextStyle(
-            color: Color(0xFFFF9800),
-            fontSize: 18,
+            color: const Color(0xFFE47f25),
+            fontSize: MediaQuery.of(context).size.width * 0.045,
             fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Professional Details',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: MediaQuery.of(context).size.width * 0.04,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFFFF9800),
+                color: const Color(0xFFE47F25),
               ),
             ),
-            const SizedBox(height: 20),
-            _buildTextField('Full Name *', _nameController, 'Enter Name'),
-            const SizedBox(height: 16),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+            _buildValidatedTextField('Full Name *', _nameController, 'Enter Name', _validateName, _nameError),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.04),
             _buildDateField(),
-            const SizedBox(height: 16),
-            _buildTextField('Mobile Number *', _mobileController, '9876543210'),
-            const SizedBox(height: 20),
-            const Text(
+            SizedBox(height: MediaQuery.of(context).size.width * 0.04),
+            _buildValidatedTextField('Mobile Number *', _mobileController, '9876543210', _validateMobile, _mobileError, TextInputType.phone, 10),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+            Text(
               'Identity Proof',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: MediaQuery.of(context).size.width * 0.04,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFFFF9800),
+                color: const Color(0xFFE47F25),
               ),
             ),
-            const SizedBox(height: 8),
-            const Text(
+            SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+            Text(
               'Aadhar Card or PAN Card',
-              style: TextStyle(fontSize: 14, color: Colors.black54),
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.035,
+                color: Colors.black54,
+              ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.03),
             _buildUploadField(),
-            const SizedBox(height: 32),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: _isFormValid() ? _showSuccessDialog : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _isFormValid()
-                      ? const Color(0xFFFF9800)
-                      : Colors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+            if (_imageError != null)
+              Padding(
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.02),
+                child: Text(
+                  _imageError!,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: MediaQuery.of(context).size.width * 0.03,
                   ),
                 ),
-                child: const Text(
+              ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.08),
+            SizedBox(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.width * 0.12,
+              child: ElevatedButton(
+                onPressed: _isFormValid() && _nameError == null && _mobileError == null
+                    ? () {
+                        _validateDob();
+                        _validateImage();
+                        if (_dobError == null && _imageError == null) {
+                          _showSuccessDialog();
+                        }
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _isFormValid()
+                      ? const Color(0xFFE47F25)
+                      : Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.06),
+                  ),
+                ),
+                child: Text(
                   'Submit',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -280,6 +331,60 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildValidatedTextField(
+    String label,
+    TextEditingController controller,
+    String hint,
+    Function(String) validator,
+    String? errorText,
+    [TextInputType? keyboardType,
+    int? maxLength]
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: MediaQuery.of(context).size.width * 0.035,
+            fontWeight: FontWeight.w500,
+            color: Colors.black87,
+          ),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+        TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
+          maxLength: maxLength,
+          onChanged: validator,
+          decoration: InputDecoration(
+            hintText: hint,
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
+              borderSide: const BorderSide(color: Color(0xFFE47F25)),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.04,
+              vertical: MediaQuery.of(context).size.width * 0.03,
+            ),
+            counterText: '',
+            errorText: errorText,
+          ),
+        ),
+      ],
     );
   }
 
@@ -293,13 +398,13 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
+          style: TextStyle(
+            fontSize: MediaQuery.of(context).size.width * 0.035,
             fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: MediaQuery.of(context).size.width * 0.02),
         TextFormField(
           controller: controller,
           decoration: InputDecoration(
@@ -307,16 +412,16 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
             filled: true,
             fillColor: Colors.grey.shade100,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
               borderSide: BorderSide.none,
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Color(0xFFFF9800)),
+              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
+              borderSide: const BorderSide(color: Color(0xFFE47F25)),
             ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.04,
+              vertical: MediaQuery.of(context).size.width * 0.03,
             ),
           ),
         ),
@@ -328,15 +433,15 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Date of birth*',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: MediaQuery.of(context).size.width * 0.035,
             fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: MediaQuery.of(context).size.width * 0.02),
         GestureDetector(
           onTap: _selectDate,
           child: AbsorbPointer(
@@ -347,21 +452,27 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                 filled: true,
                 fillColor: Colors.grey.shade100,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
                   borderSide: BorderSide.none,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xFFFF9800)),
+                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
+                  borderSide: const BorderSide(color: Color(0xFFE47F25)),
                 ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
+                  borderSide: const BorderSide(color: Colors.red),
                 ),
-                suffixIcon: const Icon(
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.04,
+                  vertical: MediaQuery.of(context).size.width * 0.03,
+                ),
+                suffixIcon: Icon(
                   Icons.calendar_today,
-                  color: Color(0xFFFF9800),
+                  color: const Color(0xFFE47F25),
+                  size: MediaQuery.of(context).size.width * 0.05,
                 ),
+                errorText: _dobError,
               ),
             ),
           ),

@@ -9,7 +9,10 @@ class MobileOtpScreen extends StatefulWidget {
 }
 
 class _MobileOtpScreenState extends State<MobileOtpScreen> {
-  final List<TextEditingController> _otpControllers = List.generate(6, (index) => TextEditingController());
+  final List<TextEditingController> _otpControllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
   Timer? _timer;
   int _seconds = 60;
@@ -50,7 +53,7 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFFFF9800)),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFFE47f25)),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -70,10 +73,7 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
             const SizedBox(height: 8),
             const Text(
               'Enter 6 - digit verification code sent to your mobile number.',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
+              style: TextStyle(fontSize: 14, color: Color(0xFF000000)),
             ),
             const SizedBox(height: 32),
             Row(
@@ -89,14 +89,20 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
                   style: TextStyle(color: Colors.black),
                 ),
                 GestureDetector(
-                  onTap: _seconds == 0 ? () {
-                    setState(() => _seconds = 60);
-                    _startTimer();
-                  } : null,
+                  onTap: _seconds == 0
+                      ? () {
+                          setState(() => _seconds = 60);
+                          _startTimer();
+                        }
+                      : null,
                   child: Text(
-                    _seconds > 0 ? 'Resend code in $_seconds seconds' : 'Resend code',
+                    _seconds > 0
+                        ? 'Resend code in $_seconds seconds'
+                        : 'Resend code',
                     style: TextStyle(
-                      color: _seconds > 0 ? Colors.grey : const Color(0xFFFF9800),
+                      color: _seconds > 0
+                          ? Colors.grey
+                          : const Color(0xFFE47F25),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -104,15 +110,14 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
               ],
             ),
             const SizedBox(height: 48),
-            SizedBox(
+            Container(
               width: double.infinity,
-              height: 50,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFF9800),
+                  backgroundColor: const Color(0xFFE47F25),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),

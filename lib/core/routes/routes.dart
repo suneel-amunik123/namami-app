@@ -4,7 +4,7 @@ import 'package:namami/core/routes/enum.dart';
 export 'package:namami/core/routes/enum.dart';
 import 'package:namami/core/widgets/splash_screen.dart';
 import 'package:namami/features/auth/view/login_view.dart';
-import 'package:namami/features/auth/view/otp_view.dart';
+import 'package:namami/features/auth/view/otp_view_login.dart';
 import 'package:namami/features/auth/view/register_view.dart';
 import 'package:namami/features/home/home_view.dart';
 
@@ -21,7 +21,7 @@ class RouteManager {
           settings: settings,
         );
       }
-      
+
       final route = Routes.values.firstWhere((r) => r.path == settings?.name);
       return MaterialPageRoute(
         builder: (_) => getPage(route, arguments: settings?.arguments),
@@ -44,7 +44,7 @@ class RouteManager {
       case Routes.login:
         return const LoginView();
       case Routes.otp:
-        return const OtpView();
+        return const OtpViewLogin();
       case Routes.register:
         return const RegisterView();
       case Routes.home:

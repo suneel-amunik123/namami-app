@@ -13,19 +13,51 @@ class _RegisterViewState extends State<RegisterView> {
   final Map<String, bool> _fieldErrors = {};
   bool _showValidation = false;
 
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+
+  String? nameError;
+  String? mobileError;
+  String? emailError;
+
+  void validateName(String value) {
+    setState(() {
+      nameError = value.length < 2 ? 'Please enter minimum 2 characters' : null;
+    });
+  }
+
+  void validateMobile(String value) {
+    setState(() {
+      mobileError = value.length != 10 ? 'Enter 10 digit mobile number' : null;
+    });
+  }
+
+  void validateEmail(String value) {
+    setState(() {
+      emailError = !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)
+          ? 'Enter valid email address'
+          : null;
+    });
+  }
+
   void _validateAndRegister(RegisterProvider provider) {
     setState(() {
       _showValidation = true;
       _fieldErrors.clear();
-      
+
       if (provider.registerModel.name.isEmpty) _fieldErrors['name'] = true;
-      if (provider.registerModel.mobileNumber.isEmpty) _fieldErrors['mobile'] = true;
+      if (provider.registerModel.mobileNumber.isEmpty)
+        _fieldErrors['mobile'] = true;
       if (provider.registerModel.email.isEmpty) _fieldErrors['email'] = true;
-      if (provider.registerModel.experience.isEmpty) _fieldErrors['experience'] = true;
-      if (provider.registerModel.languages.isEmpty) _fieldErrors['languages'] = true;
-      if (provider.registerModel.address.isEmpty) _fieldErrors['address'] = true;
+      if (provider.registerModel.experience.isEmpty)
+        _fieldErrors['experience'] = true;
+      if (provider.registerModel.languages.isEmpty)
+        _fieldErrors['languages'] = true;
+      if (provider.registerModel.address.isEmpty)
+        _fieldErrors['address'] = true;
     });
-    
+
     if (_fieldErrors.isEmpty) {
       provider.register();
     } else {
@@ -68,11 +100,11 @@ class _RegisterViewState extends State<RegisterView> {
           backgroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
-          title: const Text(
+          title: Text(
             'Complete Profile',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 18,
+              fontSize: MediaQuery.of(context).size.width * 0.045,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -80,43 +112,60 @@ class _RegisterViewState extends State<RegisterView> {
         body: Consumer<RegisterProvider>(
           builder: (context, registerProvider, child) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
               child: Container(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(
+                  MediaQuery.of(context).size.width * 0.04,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFFF9800), width: 1),
+                  borderRadius: BorderRadius.circular(
+                    MediaQuery.of(context).size.width * 0.03,
+                  ),
+                  border: Border.all(color: const Color(0xFFE47f25), width: 1),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Name Field
                     _buildLabel('Name *'),
-                    _buildTextField(
+                    _buildValidatedTextField(
                       'Enter Your Full Name',
-                      onChanged: registerProvider.updateName,
-                      fieldKey: 'name',
+                      controller: nameController,
+                      onChanged: (value) {
+                        validateName(value);
+                        registerProvider.updateName(value);
+                      },
+                      errorText: nameError,
                     ),
                     const SizedBox(height: 16),
 
                     // Mobile Number Field
                     _buildLabel('Mobile Number *'),
-                    _buildTextField(
+                    _buildValidatedTextField(
                       'Enter Mobile Number',
-                      onChanged: registerProvider.updateMobileNumber,
+                      controller: mobileController,
+                      onChanged: (value) {
+                        validateMobile(value);
+                        registerProvider.updateMobileNumber(value);
+                      },
                       keyboardType: TextInputType.phone,
-                      fieldKey: 'mobile',
+                      maxLength: 10,
+                      errorText: mobileError,
                     ),
                     const SizedBox(height: 16),
 
                     // Email Field
                     _buildLabel('Email *'),
-                    _buildTextField(
+                    _buildValidatedTextField(
                       'Enter Email',
-                      onChanged: registerProvider.updateEmail,
+                      controller: emailController,
+                      onChanged: (value) {
+                        validateEmail(value);
+                        registerProvider.updateEmail(value);
+                      },
                       keyboardType: TextInputType.emailAddress,
-                      fieldKey: 'email',
+                      errorText: emailError,
                     ),
                     const SizedBox(height: 16),
 
@@ -157,6 +206,7 @@ class _RegisterViewState extends State<RegisterView> {
                     _buildTextField(
                       'Enter Bio',
                       onChanged: registerProvider.updateBio,
+
                       maxLines: 3,
                     ),
                     const SizedBox(height: 32),
@@ -165,14 +215,21 @@ class _RegisterViewState extends State<RegisterView> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: registerProvider.registerModel.isLoading
+                        onPressed:
+                            registerProvider.registerModel.isLoading ||
+                                nameError != null ||
+                                mobileError != null ||
+                                emailError != null ||
+                                nameController.text.isEmpty ||
+                                mobileController.text.isEmpty ||
+                                emailController.text.isEmpty
                             ? null
                             : () => _validateAndRegister(registerProvider),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFFF9800),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          backgroundColor: const Color(0xFFE47F25),
+                          padding: const EdgeInsets.symmetric(vertical: 0),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         child: registerProvider.registerModel.isLoading
@@ -199,13 +256,74 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
+  Widget _buildValidatedTextField(
+    String hint, {
+    required TextEditingController controller,
+    required Function(String) onChanged,
+    TextInputType? keyboardType,
+    int maxLines = 1,
+    int? maxLength,
+    String? errorText,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(8),
+            border: errorText != null
+                ? Border.all(color: Colors.red, width: 1)
+                : null,
+          ),
+          child: TextField(
+            controller: controller,
+            onChanged: onChanged,
+            keyboardType: keyboardType,
+            maxLines: maxLines,
+            maxLength: maxLength,
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: TextStyle(
+                color: Colors.grey[500],
+                fontSize: MediaQuery.of(context).size.width * 0.04,
+              ),
+              border: InputBorder.none,
+              counterText: '',
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.04,
+                vertical: MediaQuery.of(context).size.width * 0.04,
+              ),
+            ),
+          ),
+        ),
+        if (errorText != null)
+          Padding(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * 0.01,
+              left: MediaQuery.of(context).size.width * 0.02,
+            ),
+            child: Text(
+              errorText,
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
   Widget _buildLabel(String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).size.width * 0.02,
+      ),
       child: Text(
         text,
-        style: const TextStyle(
-          fontSize: 14,
+        style: TextStyle(
+          fontSize: MediaQuery.of(context).size.width * 0.035,
           fontWeight: FontWeight.w500,
           color: Colors.black87,
         ),
@@ -268,9 +386,9 @@ class _RegisterViewState extends State<RegisterView> {
     String hint,
     List<String> options,
     String selectedValue,
-    Function(String) onChanged,
-    {String? fieldKey}
-  ) {
+    Function(String) onChanged, {
+    String? fieldKey,
+  }) {
     bool hasError = _showValidation && _fieldErrors[fieldKey] == true;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,7 +404,10 @@ class _RegisterViewState extends State<RegisterView> {
             hint: Text(hint, style: TextStyle(color: Colors.grey[500])),
             decoration: const InputDecoration(
               border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 16,
+              ),
             ),
             items: options.map((option) {
               return DropdownMenuItem(value: option, child: Text(option));
@@ -319,9 +440,9 @@ class _RegisterViewState extends State<RegisterView> {
     String hint,
     List<String> options,
     List<String> selectedValues,
-    Function(List<String>) onChanged,
-    {String? fieldKey}
-  ) {
+    Function(List<String>) onChanged, {
+    String? fieldKey,
+  }) {
     bool hasError = _showValidation && _fieldErrors[fieldKey] == true;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -333,7 +454,12 @@ class _RegisterViewState extends State<RegisterView> {
             border: hasError ? Border.all(color: Colors.red, width: 1) : null,
           ),
           child: InkWell(
-            onTap: () => _showLanguageDialog(options, selectedValues, onChanged, fieldKey),
+            onTap: () => _showLanguageDialog(
+              options,
+              selectedValues,
+              onChanged,
+              fieldKey,
+            ),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child: Row(
@@ -408,6 +534,9 @@ class _RegisterViewState extends State<RegisterView> {
                   child: const Text('Cancel'),
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFE47F25),
+                  ),
                   onPressed: () {
                     onChanged(tempSelected);
                     if (fieldKey != null && tempSelected.isNotEmpty) {
@@ -417,7 +546,12 @@ class _RegisterViewState extends State<RegisterView> {
                     }
                     Navigator.pop(context);
                   },
-                  child: const Text('Done'),
+                  child: Container(
+                    child: const Text(
+                      'Done',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
               ],
             );

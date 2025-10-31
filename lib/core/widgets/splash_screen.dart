@@ -12,13 +12,30 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   bool _hasNavigated = false;
+  late AnimationController _logoController;
+  late Animation<double> _logoAnimation;
 
   @override
   void initState() {
     super.initState();
     log('Splash screen initialized');
+
+    _logoController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _logoAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _logoController, curve: Curves.easeIn));
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) _logoController.forward();
+    });
+
     _navigateToLogin();
   }
 
@@ -36,6 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void dispose() {
+    _logoController.dispose();
     super.dispose();
   }
 
@@ -47,7 +65,27 @@ class _SplashScreenState extends State<SplashScreen> {
           backgroundColor: themeProvider.isDarkMode
               ? Colors.black
               : Colors.white,
-          body: Image.asset('assets/images/splashscreen.png', fit: BoxFit.fill),
+          body: Stack(
+            children: [
+              Image.asset(
+                'assets/images/splash_screen1.jpg',
+
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+              Center(
+                child: FadeTransition(
+                  opacity: _logoAnimation,
+                  child: Image.asset(
+                    'assets/images/namami_logo2.png',
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    height: MediaQuery.of(context).size.width * 0.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

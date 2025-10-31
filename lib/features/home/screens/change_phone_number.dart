@@ -7,11 +7,14 @@ class ChangePhoneNumberScreen extends StatefulWidget {
   const ChangePhoneNumberScreen({super.key});
 
   @override
-  State<ChangePhoneNumberScreen> createState() => _ChangePhoneNumberScreenState();
+  State<ChangePhoneNumberScreen> createState() =>
+      _ChangePhoneNumberScreenState();
 }
 
 class _ChangePhoneNumberScreenState extends State<ChangePhoneNumberScreen> {
-  final TextEditingController _currentPhoneController = TextEditingController(text: "+91 9876543210"); // Example number
+  final TextEditingController _currentPhoneController = TextEditingController(
+    text: "+91 9876543210",
+  ); // Example number
   final TextEditingController _newPhoneController = TextEditingController();
 
   @override
@@ -29,13 +32,13 @@ class _ChangePhoneNumberScreenState extends State<ChangePhoneNumberScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFFFF9800)),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFFE47F25)),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
           'Change Phone Number',
           style: TextStyle(
-            color: Color(0xFFFF9800),
+            color: Color(0xFFE47F25),
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -66,8 +69,12 @@ class _ChangePhoneNumberScreenState extends State<ChangePhoneNumberScreen> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
+                  // borderColor: Colors.grey.shade300,
                 ),
-                prefixIcon: const Icon(Icons.phone_android, color: Color(0xFFFF9800)),
+                prefixIcon: const Icon(
+                  Icons.phone_android,
+                  color: Color(0xFFE47F25),
+                ),
               ),
             ),
             const SizedBox(height: 24),
@@ -100,40 +107,40 @@ class _ChangePhoneNumberScreenState extends State<ChangePhoneNumberScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xFFFF9800)),
+                  borderSide: const BorderSide(color: Color(0xFFE47F25)),
                 ),
-                prefixIcon: const Icon(Icons.phone_android, color: Color(0xFFFF9800)),
+                prefixIcon: const Icon(
+                  Icons.phone_android,
+                  color: Color(0xFFE47F25),
+                ),
                 counterText: '',
               ),
             ),
             const SizedBox(height: 32),
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Navigate to verify OTP screen
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VerifyUpdateScreen(
-                        newPhoneNumber: _newPhoneController.text,
-                      ),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to verify OTP screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VerifyUpdateScreen(
+                      newPhoneNumber: _newPhoneController.text,
                     ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFF9800),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
                   ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFE47F25),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text(
-                  'Send OTP',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+              ),
+              child: const Text(
+                'Send OTP',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),

@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
           children: [
             Icon(
               isSelected ? activeIcon : icon,
-              color: isSelected ? const Color(0xFFFF9800) : Colors.white,
+              color: isSelected ? const Color(0xFFe47F25) : Colors.white,
               size: 24,
             ),
             if (isSelected) const SizedBox(width: 3),
@@ -47,7 +47,7 @@ class _HomeViewState extends State<HomeView> {
                 label,
                 style: const TextStyle(
                   // color: Colors.white,
-                  color: const Color(0xFFFF9800),
+                  color: const Color(0xFFe47F25),
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
@@ -76,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
             ),
             bottomNavigationBar: Container(
               height: 60,
-              color: const Color(0xFFFF9800),
+              color: const Color(0xFFe47f25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
