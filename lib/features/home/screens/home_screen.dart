@@ -49,7 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Text(
                               homeProvider.user.name.split(' ').first,
                               style: TextStyle(
-                                fontSize: MediaQuery.of(context).size.width * 0.035,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.035,
                                 color: const Color(0xFFE47f25),
                               ),
                             );
@@ -205,7 +206,9 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.03),
+        borderRadius: BorderRadius.circular(
+          MediaQuery.of(context).size.width * 0.03,
+        ),
         border: Border.all(color: const Color(0xFFE47F25)),
       ),
       child: Column(
@@ -347,11 +350,17 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 4),
           Row(
             children: [
-              const Icon(
-                Icons.calendar_today,
-                size: 12,
-                color: Color(0xFFE47F25),
+              Image.asset(
+                'assets/images/background_callender_removebg.png',
+                width: 18,
+                height: 18,
+                //color: Color(0xFFE47F25),
               ),
+              // const Icon(
+              //   Icons.calendar_today,
+              //   size: 12,
+              //   color: Color(0xFFE47F25),
+              // ),
               const SizedBox(width: 4),
               Flexible(
                 child: Text(
@@ -361,7 +370,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(width: 8),
-              const Icon(Icons.location_on, size: 15, color: Color(0XFFE47F25)),
+              Image.asset(
+                'assets/images/background_location_removebg.png',
+                width: 18,
+                height: 18,
+                // color: Color(0XFFE47F25),
+              ),
+              // const Icon(Icons.location_on, size: 15, color: Color(0XFFE47F25)),
               const SizedBox(width: 4),
               Flexible(
                 child: Text(

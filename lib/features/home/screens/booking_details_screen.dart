@@ -45,55 +45,55 @@ class BookingDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                        _buildDetailItem(
-                          'assets/images/background_home.jpg',
-                          'Name',
-                          booking.customerName ?? 'Rohan Sharma',
-                        ),
-                        SizedBox(height: 16.h),
-                        _buildDetailItem(
-                          'assets/images/background_phone.jpg',
-                          'Phone',
-                          booking.customerPhone ?? '9876543210',
-                        ),
-                        SizedBox(height: 16.h),
-                        _buildDetailItem(
-                          'assets/images/background_callender.jpg',
-                          'Date & Time',
-                          booking.dateTime != null
-                              ? '${booking.dateTime!.day} Oct 2024, 7:00 AM'
-                              : '22 Oct 2024, 7:00 AM',
-                        ),
-                        SizedBox(height: 16.h),
-                        _buildDetailItem(
-                          'assets/images/background_ganesh_puja.jpg',
-                          'Puja Type',
-                          booking.pujaName ?? 'Ganesh Puja',
-                        ),
-                        SizedBox(height: 16.h),
-                        _buildDetailItem(
-                          'assets/images/background_price.jpg',
-                          'Booking Amount',
-                          '₹${booking.amount?.toStringAsFixed(0) ?? '2500'}',
-                        ),
-                        SizedBox(height: 16.h),
-                        _buildDetailItem(
-                          'assets/images/background_oom.jpg',
-                          'Mode of Puja',
-                          'Home',
-                        ),
-                        SizedBox(height: 16.h),
-                        _buildDetailItem(
-                          'assets/images/background_samagri.jpg',
-                          'Samagri',
-                          'Self Arranged',
-                        ),
-                        SizedBox(height: 16.h),
-                        _buildDetailItem(
-                          'assets/images/background_location.jpg',
-                          'Address',
-                          booking.location ?? 'Jubilee Hills,Hyderabad',
-                        ),
+                  _buildDetailItem(
+                    'assets/images/background_home_removebg.png',
+                    'Name',
+                    booking.customerName ?? 'Rohan Sharma',
+                  ),
+                  SizedBox(height: 16.h),
+                  _buildDetailItem(
+                    'assets/images/background_phone_removebg.png',
+                    'Phone',
+                    booking.customerPhone ?? '9876543210',
+                  ),
+                  SizedBox(height: 16.h),
+                  _buildDetailItem(
+                    'assets/images/background_callender_removebg.png',
+                    'Date & Time',
+                    booking.dateTime != null
+                        ? '${booking.dateTime!.day} Oct 2024, 7:00 AM'
+                        : '22 Oct 2024, 7:00 AM',
+                  ),
+                  SizedBox(height: 16.h),
+                  _buildDetailItem(
+                    'assets/images/background_ganesh_puja_removebg.png',
+                    'Puja Type',
+                    booking.pujaName ?? 'Ganesh Puja',
+                  ),
+                  SizedBox(height: 16.h),
+                  _buildDetailItem(
+                    'assets/images/background_price_removebg.png',
+                    'Booking Amount',
+                    '₹${booking.amount?.toStringAsFixed(0) ?? '2500'}',
+                  ),
+                  SizedBox(height: 16.h),
+                  _buildDetailItem(
+                    'assets/images/background_oom_removebg.png',
+                    'Mode of Puja',
+                    'Home',
+                  ),
+                  SizedBox(height: 16.h),
+                  _buildDetailItem(
+                    'assets/images/background_samagri_removebg.png',
+                    'Samagri',
+                    'Self Arranged',
+                  ),
+                  SizedBox(height: 16.h),
+                  _buildDetailItem(
+                    'assets/images/background_location_removebg.png',
+                    'Address',
+                    booking.location ?? 'Jubilee Hills,Hyderabad',
+                  ),
                   SizedBox(height: 16.h),
                   Container(
                     width: double.infinity,
