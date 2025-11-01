@@ -87,28 +87,28 @@ class _HomeViewState extends State<HomeView> {
                     children: [
                       _buildNavItem(
                         0,
-                        'assets/images/home_icon3.jpg',
+                        'assets/images/home_white.png',
                         'assets/images/home_icon3.jpg',
                         'Home',
                         navigationProvider,
                       ),
                       _buildNavItem(
                         1,
-                        'assets/images/booking_icon3.jpg',
+                        'assets/images/booking_white.png',
                         'assets/images/booking_icon3.jpg',
                         'Booking',
                         navigationProvider,
                       ),
                       _buildNavItem(
                         2,
-                        'assets/images/oom3.jpg',
+                        'assets/images/oom_white.png',
                         'assets/images/oom3.jpg',
                         'Pujas',
                         navigationProvider,
                       ),
                       _buildNavItem(
                         3,
-                        'assets/images/profile_icon3.jpg',
+                        'assets/images/profile_white.png',
                         'assets/images/profile_icon3.jpg',
                         'Profile',
                         navigationProvider,

@@ -96,7 +96,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.03),
+                borderRadius: BorderRadius.circular(
+                  MediaQuery.of(context).size.width * 0.03,
+                ),
                 border: Border.all(color: const Color(0xFFE47F25), width: 1),
               ),
               child: Column(
@@ -180,7 +182,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     );
                   }),
                   _buildDivider(),
-                  _buildProfileOption(Icons.logout, 'Logout', _showLogoutDialog),
+                  _buildProfileOption(
+                    Icons.logout,
+                    'Logout',
+                    _showLogoutDialog,
+                  ),
                 ],
               ),
             ),
@@ -203,7 +209,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
               decoration: BoxDecoration(
                 color: const Color(0xFFE47F25).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
+                borderRadius: BorderRadius.circular(
+                  MediaQuery.of(context).size.width * 0.02,
+                ),
               ),
               child: Icon(
                 icon,
@@ -244,9 +252,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _showLogoutDialog() {
     showDialog(
+      // barrierColor: Colors.black54,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: const Text('Logout'),
           content: const Text('Do you want to log out?'),
           actions: [
