@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'provider/navigation_provider.dart';
 import 'screens/home_screen.dart';
 import 'screens/booking_screen.dart';
@@ -16,8 +17,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   Widget _buildNavItem(
     int index,
-    IconData icon,
-    IconData activeIcon,
+    String imagePath,
+    String activeImagePath,
     String label,
     NavigationProvider provider,
   ) {
@@ -25,30 +26,29 @@ class _HomeViewState extends State<HomeView> {
     return GestureDetector(
       onTap: () => provider.setIndex(index),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
         decoration: isSelected
             ? BoxDecoration(
-                // color: Colors.white.withOpacity(0.2),
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20.r),
               )
             : null,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              isSelected ? activeIcon : icon,
-              color: isSelected ? const Color(0xFFe47F25) : Colors.white,
-              size: 24,
+            Image.asset(
+              isSelected ? activeImagePath : imagePath,
+              width: 24.w,
+              height: 24.h,
+              fit: BoxFit.contain,
             ),
-            if (isSelected) const SizedBox(width: 3),
+            if (isSelected) SizedBox(width: 3.w),
             if (isSelected)
               Text(
                 label,
-                style: const TextStyle(
-                  // color: Colors.white,
+                style: TextStyle(
                   color: const Color(0xFFe47F25),
-                  fontSize: 12,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -60,60 +60,67 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => NavigationProvider(),
-      child: Consumer<NavigationProvider>(
-        builder: (context, navigationProvider, child) {
-          return Scaffold(
-            body: IndexedStack(
-              index: navigationProvider.currentIndex,
-              children: [
-                HomeScreen(),
-                BookingScreen(),
-                PujasScreen(),
-                ProfileScreen(),
-              ],
-            ),
-            bottomNavigationBar: Container(
-              height: 60,
-              color: const Color(0xFFe47f25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNavItem(
-                    0,
-                    Icons.home_outlined,
-                    Icons.home,
-                    'Home',
-                    navigationProvider,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return ChangeNotifierProvider(
+          create: (_) => NavigationProvider(),
+          child: Consumer<NavigationProvider>(
+            builder: (context, navigationProvider, child) {
+              return Scaffold(
+                body: IndexedStack(
+                  index: navigationProvider.currentIndex,
+                  children: [
+                    HomeScreen(),
+                    BookingScreen(),
+                    PujasScreen(),
+                    ProfileScreen(),
+                  ],
+                ),
+                bottomNavigationBar: Container(
+                  height: 60.h,
+                  color: const Color(0xFFe47f25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildNavItem(
+                        0,
+                        'assets/images/home_icon3.jpg',
+                        'assets/images/home_icon3.jpg',
+                        'Home',
+                        navigationProvider,
+                      ),
+                      _buildNavItem(
+                        1,
+                        'assets/images/booking_icon3.jpg',
+                        'assets/images/booking_icon3.jpg',
+                        'Booking',
+                        navigationProvider,
+                      ),
+                      _buildNavItem(
+                        2,
+                        'assets/images/oom3.jpg',
+                        'assets/images/oom3.jpg',
+                        'Pujas',
+                        navigationProvider,
+                      ),
+                      _buildNavItem(
+                        3,
+                        'assets/images/profile_icon3.jpg',
+                        'assets/images/profile_icon3.jpg',
+                        'Profile',
+                        navigationProvider,
+                      ),
+                    ],
                   ),
-                  _buildNavItem(
-                    1,
-                    Icons.calendar_today_outlined,
-                    Icons.calendar_today,
-                    'Booking',
-                    navigationProvider,
-                  ),
-                  _buildNavItem(
-                    2,
-                    Icons.temple_hindu_outlined,
-                    Icons.temple_hindu,
-                    'Pujas',
-                    navigationProvider,
-                  ),
-                  _buildNavItem(
-                    3,
-                    Icons.person_outline_rounded,
-                    Icons.person_outlined,
-                    'Profile',
-                    navigationProvider,
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

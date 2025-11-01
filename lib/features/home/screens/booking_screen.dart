@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/home_provider.dart';
 import '../model/booking_model.dart';
+import 'booking_details_screen.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -92,7 +93,9 @@ class _BookingScreenState extends State<BookingScreen> {
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.02),
+        borderRadius: BorderRadius.circular(
+          MediaQuery.of(context).size.width * 0.02,
+        ),
         border: Border.all(color: const Color(0xFFe47f25), width: 1),
       ),
       child: Row(
@@ -139,7 +142,9 @@ class _BookingScreenState extends State<BookingScreen> {
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.03),
+        borderRadius: BorderRadius.circular(
+          MediaQuery.of(context).size.width * 0.03,
+        ),
         border: Border.all(color: const Color(0xFFE47f25), width: 1),
       ),
       child: Column(
@@ -166,7 +171,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   Text(
                     booking.customerName ?? 'Unknown',
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.035,
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
                       fontWeight: FontWeight.w600,
                       color: const Color(0xFF000000),
                     ),
@@ -185,21 +190,30 @@ class _BookingScreenState extends State<BookingScreen> {
           const SizedBox(height: 16),
 
           // Booking Details
-          _buildDetailRow(Icons.temple_hindu, booking.pujaName ?? ''),
+          _buildDetailRow(
+            'assets/images/ganesh_puja.jpg',
+            booking.pujaName ?? '',
+          ),
           const SizedBox(height: 8),
           _buildDetailRow(
-            Icons.calendar_today,
+            'assets/images/callender_image.jpg',
             booking.dateTime != null
                 ? '${booking.dateTime!.day} ${_getMonthName(booking.dateTime!.month)} ${booking.dateTime!.year}, ${_formatTime(booking.dateTime!)}'
                 : '',
           ),
           const SizedBox(height: 8),
-          _buildDetailRow(Icons.location_on, booking.location ?? ''),
-          const SizedBox(height: 8),
-          _buildDetailRow(Icons.person, 'Somagiri | Self Arranged'),
+          _buildDetailRow(
+            'assets/images/location_image.jpg',
+            booking.location ?? '',
+          ),
           const SizedBox(height: 8),
           _buildDetailRow(
-            Icons.currency_rupee,
+            'assets/images/samagri_image.jpg',
+            'Somagiri | Self Arranged',
+          ),
+          const SizedBox(height: 8),
+          _buildDetailRow(
+            'assets/images/price_image.jpg',
             '₹${(booking.amount ?? 0).toStringAsFixed(0)}',
           ),
           const SizedBox(height: 16),
@@ -213,6 +227,12 @@ class _BookingScreenState extends State<BookingScreen> {
                     setState(() {
                       _bookingStates[booking.id!] = 'accepted';
                     });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookingDetailsScreen(booking: booking),
+                      ),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -296,21 +316,22 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  Widget _buildDetailRow(IconData icon, String text) {
+  Widget _buildDetailRow(String imagePath, String text) {
     return Row(
       children: [
-        Icon(
-          icon,
-          size: MediaQuery.of(context).size.width * 0.04,
-          color: const Color.fromARGB(255, 73, 73, 73),
+        Image.asset(
+          imagePath,
+          width: MediaQuery.of(context).size.width * 0.05,
+          height: MediaQuery.of(context).size.width * 0.05,
+          fit: BoxFit.contain,
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.02),
         Expanded(
           child: Text(
             text,
             style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.03,
-              color: icon == Icons.currency_rupee
+              fontSize: MediaQuery.of(context).size.width * 0.04,
+              color: imagePath == 'assets/images/price_image.jpg'
                   ? const Color(0xFFE47F25)
                   : const Color(0xFF000000),
             ),
