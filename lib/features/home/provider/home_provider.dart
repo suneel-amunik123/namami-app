@@ -18,6 +18,7 @@ class HomeProvider extends ChangeNotifier {
   );
 
   final Set<String> _acceptedBookings = {};
+  final Set<String> _rejectedBookings = {};
 
   List<BookingModel> _bookings = [
     BookingModel(
@@ -85,9 +86,8 @@ class HomeProvider extends ChangeNotifier {
   }
 
   BookingModel? getNewBooking() {
-    return _bookings.where((booking) => booking.status == BookingStatus.pending).isNotEmpty
-        ? _bookings.where((booking) => booking.status == BookingStatus.pending).first
-        : null;
+    // Show the first booking regardless of status for new bookings section
+    return _bookings.isNotEmpty ? _bookings.first : null;
   }
 
   bool isBookingAccepted(String bookingId) {
@@ -96,13 +96,22 @@ class HomeProvider extends ChangeNotifier {
 
   void acceptBooking(String bookingId) {
     _acceptedBookings.add(bookingId);
-    updateBookingStatus(bookingId, BookingStatus.confirmed);
+    _rejectedBookings.remove(bookingId);
     notifyListeners();
   }
 
   void rejectBooking(String bookingId) {
     _acceptedBookings.remove(bookingId);
-    updateBookingStatus(bookingId, BookingStatus.cancelled);
+    _rejectedBookings.add(bookingId);
+    notifyListeners();
+  }
+
+  bool isBookingRejected(String bookingId) {
+    return _rejectedBookings.contains(bookingId);
+  }
+
+  void addToDailyBookings(BookingModel booking) {
+    // Booking is already in the list, just update status
     notifyListeners();
   }
 }

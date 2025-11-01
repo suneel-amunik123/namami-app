@@ -185,7 +185,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFE47F25), width: 1),
+                    border: Border.all(
+                      color: const Color(0xFFE47F25),
+                      width: 1,
+                    ),
                   ),
                   child: Consumer<HomeProvider>(
                     builder: (context, homeProvider, child) {
@@ -393,123 +396,148 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const SizedBox(height: 12),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  homeProvider.acceptBooking(booking.id);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: homeProvider.isBookingAccepted(booking.id)
-                      ? const Color(0xFFE47F25)
-                      : Colors.white,
-                  foregroundColor: homeProvider.isBookingAccepted(booking.id)
-                      ? Colors.white
-                      : const Color(0xFFE47F25),
-                  side: const BorderSide(color: Color(0xFFE47F25)),
-                  elevation: 0,
+          homeProvider.isBookingAccepted(booking.id)
+              ? Container(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 10,
+                    vertical: 7,
                     horizontal: 10,
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.green.shade400, Colors.green.shade600],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.green.withOpacity(0.3),
+                        blurRadius: 4,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.check,
-                              size: 12,
-                              color: Color(0xFFE47F25),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              homeProvider.isBookingAccepted(booking.id)
-                                  ? 'Accepted'
-                                  : 'Accept',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.check_circle, color: Colors.white, size: 18),
+                      SizedBox(width: 8),
+                      Text(
+                        'Confirmed',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
                         ),
-
-                        // const Text(
-                        //   'Accept',
-                        //   style: TextStyle(
-                        //     fontSize: 12,
-                        //     fontWeight: FontWeight.w500,
-                        //   ),
-                        // ),
-                      ],
+                      ),
+                    ],
+                  ),
+                )
+              : homeProvider.isBookingRejected(booking.id)
+              ? Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 7,
+                    horizontal: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.red.shade400, Colors.red.shade600],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.red.withOpacity(0.3),
+                        blurRadius: 4,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.cancel, color: Colors.white, size: 18),
+                      SizedBox(width: 8),
+                      Text(
+                        'Rejected',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        homeProvider.acceptBooking(booking.id);
+                        homeProvider.addToDailyBookings(booking);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: const Color(0xFFE47F25),
+                        side: const BorderSide(color: Color(0xFFE47F25)),
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      child: const Row(
+                        children: [
+                          Icon(Icons.check, size: 12, color: Color(0xFFE47F25)),
+                          SizedBox(width: 4),
+                          Text(
+                            'Accept',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    ElevatedButton(
+                      onPressed: () {
+                        homeProvider.rejectBooking(booking.id);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.red,
+                        side: const BorderSide(color: Colors.red),
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      child: const Row(
+                        children: [
+                          Icon(Icons.close, size: 12, color: Colors.red),
+                          SizedBox(width: 4),
+                          Text(
+                            'Reject',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 12),
-              ElevatedButton(
-                onPressed: () {
-                  homeProvider.rejectBooking(booking.id);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.red,
-                  side: const BorderSide(color: Colors.red),
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 10,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.close,
-                              size: 12,
-                              color: Colors.red,
-                            ),
-                            const SizedBox(width: 4),
-                            const Text(
-                              'Reject',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        // const Text(
-                        //   'Reject',
-                        //   style: TextStyle(
-                        //     fontSize: 12,
-                        //     fontWeight: FontWeight.w500,
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ],
-                ),
-                // child: const Text(
-                //   'Reject',
-                //   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                // ),
-              ),
-            ],
-          ),
         ],
       ),
     );

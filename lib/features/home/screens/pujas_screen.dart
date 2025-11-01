@@ -30,6 +30,12 @@ class _PujasScreenState extends State<PujasScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        onPressed: _showAddPujaBottomSheet,
+        backgroundColor: const Color(0xFFE47F25),
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -88,44 +94,12 @@ class _PujasScreenState extends State<PujasScreen> {
             // Puja List
             Expanded(
               child: ListView.builder(
+                padding: const EdgeInsets.only(bottom: 80),
                 itemCount: _pujaStates.length,
                 itemBuilder: (context, index) {
                   final pujaName = _pujaStates.keys.elementAt(index);
                   return _buildPujaServiceCard(pujaName);
                 },
-              ),
-            ),
-
-            // Add Puja Button
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.only(top: 16, left: 230),
-              child: ElevatedButton(
-                onPressed: _showAddPujaBottomSheet,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFE47F25),
-                  foregroundColor: Colors.black,
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: CircleBorder(
-                    side: BorderSide(color: Colors.grey.shade300),
-                    // borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.add, color: Color(0xFFFFFFFF), size: 30),
-                    // SizedBox(width: 8),
-                    // Text(
-                    //   '',
-                    //   style: TextStyle(
-                    //     fontSize: 16,
-                    //     fontWeight: FontWeight.w500,
-                    //   ),
-                    // ),
-                  ],
-                ),
               ),
             ),
           ],
@@ -309,7 +283,7 @@ class _PujasScreenState extends State<PujasScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFE47F25),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -318,7 +292,7 @@ class _PujasScreenState extends State<PujasScreen> {
                   'Add',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
