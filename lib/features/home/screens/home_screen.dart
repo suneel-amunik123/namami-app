@@ -182,16 +182,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
               // Booking List
               Expanded(
-                child: Consumer<HomeProvider>(
-                  builder: (context, homeProvider, child) {
-                    final bookings = homeProvider.bookings;
-                    return ListView.builder(
-                      itemCount: bookings.length,
-                      itemBuilder: (context, index) {
-                        return _buildBookingCard(bookings[index]);
-                      },
-                    );
-                  },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: const Color(0xFFE47F25), width: 1),
+                  ),
+                  child: Consumer<HomeProvider>(
+                    builder: (context, homeProvider, child) {
+                      final bookings = homeProvider.bookings;
+                      return ListView.builder(
+                        itemCount: bookings.length,
+                        itemBuilder: (context, index) {
+                          return _buildBookingCard(bookings[index]);
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -242,7 +248,6 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
         color: Colors.grey.shade50,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Color(0xFFE47F25)),
       ),
       child: Row(
         children: [
